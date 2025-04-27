@@ -13,6 +13,8 @@
 * [Сборка или скачивание Docker образов](#dockerimages)
   * [Базовые образы](#basicimages)
   * [Битрикс образы (bx-*)](#bitriximages)
+* [Пароли к базам данных mysql и postgresql](#databasespasswords)
+* [Секретный ключ для push сервера](#pushserversecretkey)
 * [Управление](#management)
 * [Часовой пояс (timezone)](#timezone)
 * [Адресация](#iporurls)
@@ -35,6 +37,7 @@
 * [Sphinx](#sphinx)
   * [Поиск с помощью Sphinx](#sphinxsearch)
 * [Почта](#email)
+  * [Отправка почты с помощью msmtp](#msmtpmta)
   * [Отправка почты через SMTP-сервера отправителя](#emailsmtpmailer)
   * [Логирование отправки почты в файл](#emaildebuglog)
 * [PHP](#php)
@@ -106,13 +109,13 @@
 
 В этот список попадают (формат `название`:`полный_тег_с_указанием_версии_и_ос`):
 - `postgres:16.8-bookworm`
-- `redis:7.2.7-alpine`
+- `redis:7.2.8-alpine`
 - `memcached:1.6.38-alpine`
 
 Можно предварительно скачать список выше, используя команды:
 ```bash
 docker pull postgres:16.8-bookworm
-docker pull redis:7.2.7-alpine
+docker pull redis:7.2.8-alpine
 docker pull memcached:1.6.38-alpine
 ```
 
@@ -120,15 +123,15 @@ docker pull memcached:1.6.38-alpine
 ## Битрикс образы (bx-*)
 
 Так же нам понадобятся:
-- база данных mysql: используем стабильный образ `percona/percona-server:8.0.41-32-amd64`, добавляем слоем сверху конфигурацию бд, собираем `bx-percona-server:8.0.41-rhel`
-- веб сервер: используем стабильный образ `nginx:1.26.3-alpine-slim`, добавляем модули слоем сверху, собираем `bx-nginx:1.26.3-alpine`
-- интерпретатор php кода: готового совместимого образа php увы нет, берем по умолчанию образ `php:8.2.28-fpm-alpine` и добавляем то, что нам надо через пару слоев сверху, собираем `bx-php:8.2.28-fpm-alpine`
-- поиск: готового образа sphinx нет, но есть собранный пакет `sphinx` на базе `alpine` linux в официальном репозитории ОС, собираем `bx-sphinx:2.2.11-alpine`, установив пакет
-- push сервер: готового образа нет, используем образ NodeJS 20-ой версии, собираем `bx-push:3.0-alpine`, используя его исходники `push-server-0.4.0`
-- генератор самоподписных ssl сертификатов: небольшой образ с пакетами на базе `alpine` linux, собираем `bx-ssl:1.0-alpine`
+- база данных mysql: используем стабильный образ `percona/percona-server:8.0.41`, добавляем слоем сверху конфигурацию бд, собираем `bx-percona-server:8.0.41-v1-rhel`
+- веб сервер: используем стабильный образ `nginx:1.28.0-alpine-slim`, добавляем модули слоем сверху, собираем `bx-nginx:1.28.0-v1-alpine`
+- интерпретатор php кода: готового совместимого образа php увы нет, берем по умолчанию образ `php:8.2.28-fpm-alpine` и добавляем то, что нам надо через пару слоев сверху, собираем `bx-php:8.2.28-fpm-v1-alpine`
+- поиск: готового образа sphinx нет, но есть собранный пакет `sphinx` на базе `alpine` linux в официальном репозитории ОС, собираем `bx-sphinx:2.2.11-v1-alpine`, установив пакет
+- push сервер: готового образа нет, используем образ NodeJS 20-ой версии, собираем `bx-push:3.0-v1-alpine`, используя его исходники `push-server-0.4.0`
+- генератор самоподписных ssl сертификатов: небольшой образ с пакетами на базе `alpine` linux, собираем `bx-ssl:1.0-v1-alpine`
 
 Список официальных Docker образов, которые будем брать с [DockerHub](https://hub.docker.com/):
-- `Percona Server`: https://hub.docker.com/_/percona
+- `Percona Server`: https://hub.docker.com/r/percona/percona-server
 - `Nginx`: https://hub.docker.com/_/nginx
 - `PHP`: https://hub.docker.com/_/php
 - `NodeJS`: https://hub.docker.com/_/node
@@ -136,51 +139,106 @@ docker pull memcached:1.6.38-alpine
 
 Для сборки нам понадобятся следующие образы (их можно предварительно скачать используя команды):
 ```bash
-docker pull percona/percona-server:8.0.41-32-amd64
-docker pull nginx:1.26.3-alpine-slim
+docker pull percona/percona-server:8.0.41
+docker pull nginx:1.28.0-alpine-slim
 docker pull php:8.2.28-fpm-alpine
 docker pull node:20
 docker pull node:20-alpine
 docker pull alpine:3.21
 ```
 
-Собираем образы, в названии используем bx-:
+Собираем образы, в названии используем `bx-`:
 
 - bx-sphinx:
 ```bash
 cd dev/sources/bxsphinx2211/
-docker build -f Dockerfile -t bx-sphinx:2.2.11-alpine --no-cache .
+docker build -f Dockerfile -t bx-sphinx:2.2.11-v1-alpine --no-cache .
 ```
 
 - bx-push:
 ```bash
 cd dev/sources/bxpush30/
-docker build -f Dockerfile -t bx-push:3.0-alpine --no-cache .
+docker build -f Dockerfile -t bx-push:3.0-v1-alpine --no-cache .
 ```
 
 - bx-php:
 ```bash
 cd dev/sources/bxphp8228/
-docker build -f Dockerfile -t bx-php:8.2.28-fpm-alpine --no-cache .
+docker build -f Dockerfile -t bx-php:8.2.28-fpm-v1-alpine --no-cache .
 ```
 
 - bx-nginx:
 ```bash
-cd dev/sources/bxnginx1263/
-docker build -f Dockerfile -t bx-nginx:1.26.3-alpine --no-cache .
+cd dev/sources/bxnginx1280/
+docker build -f Dockerfile -t bx-nginx:1.28.0-v1-alpine --no-cache .
 ```
 
 - bx-ssl:
 ```bash
 cd dev/sources/bxssl10/
-docker build -f Dockerfile -t bx-ssl:1.0-alpine --no-cache .
+docker build -f Dockerfile -t bx-ssl:1.0-v1-alpine --no-cache .
 ```
 
 - bx-percona-server:
 ```bash
 cd dev/sources/bxpercona8041/
-docker build -f Dockerfile -t bx-percona-server:8.0.41-rhel --no-cache .
+docker build -f Dockerfile -t bx-percona-server:8.0.41-v1-rhel --no-cache .
 ```
+
+Во всех образах `bx-` в названии тега указывается `v1`, состоит из:
+- общая отметка версии, указывается буквой `v`
+- номер сборки, начинается с цифры `1`
+
+<a id="databasespasswords"></a>
+# Пароли к базам данных mysql и postgresql
+
+> [!CAUTION]
+> Внимание! Перед первым запуском обязательно придумайте или сгенерируйте ваши уникальные пароли суперпользователей баз данных `mysql` и `postgresql`.
+
+Для этого используем образ `alpine` linux:
+```bash
+docker pull alpine:3.21
+```
+
+Cгенерируем ваш уникальный пароль для суперпользователя `root` базы данных `mysql` с помощью команды:
+```bash
+docker container run --rm --name mysql_password_generate alpine:3.21 sh -c "(cat /dev/urandom | tr -dc A-Za-z0-9\?\!\@\-\_\+\%\(\)\{\}\[\]\= | head -c 16) | tr -d '\' | tr -d '^' && echo ''"
+```
+
+Cгенерируем ваш уникальный пароль для суперпользователя `postgres` базы данных `postgresql` с помощью команды:
+```bash
+docker container run --rm --name postgresql_password_generate alpine:3.21 sh -c "(cat /dev/urandom | tr -dc A-Za-z0-9\?\!\@\-\_\+\%\(\)\{\}\[\]\= | head -c 16) | tr -d '\' | tr -d '^' && echo ''"
+```
+
+Шаблон пароля для суперпользователя `root` базы данных `mysql` (`CHANGE_MYSQL_ROOT_PASSWORD_HERE`) и шаблон пароля для суперпользователя `postgres` базы данных `postgresql` (`CHANGE_POSTGRESQL_POSTGRES_PASSWORD_HERE`) хранятся в файле `.env_sql` в виде:
+```bash
+MYSQL_ROOT_PASSWORD="CHANGE_MYSQL_ROOT_PASSWORD_HERE"
+POSTGRES_PASSWORD="CHANGE_POSTGRESQL_POSTGRES_PASSWORD_HERE"
+```
+
+Обязательно измените значения в файле `.env_sql`, заменив шаблоны `CHANGE_MYSQL_ROOT_PASSWORD_HERE` и `CHANGE_POSTGRESQL_POSTGRES_PASSWORD_HERE` на ваши значения.
+
+<a id="pushserversecretkey"></a>
+# Секретный ключ для push сервера
+
+> [!CAUTION]
+> Внимание! Перед первым запуском обязательно придумайте или сгенерируйте ваш уникальный секретный ключ для push сервера.
+
+Для этого используем образ `alpine` linux:
+```bash
+docker pull alpine:3.21
+```
+
+Cгенерируем ваш уникальный секретный ключ с помощью команды:
+```bash
+docker container run --rm --name push_server_key_generate alpine:3.21 sh -c "(cat /dev/urandom | tr -dc A-Za-z0-9 | head -c 128) && echo ''"
+```
+
+Шаблон секретного ключа (`CHANGE_SECURITY_KEY_HERE`) для подписи соединения между клиентом и push-сервером хранится в файле `.env_push` в виде:
+```bash
+PUSH_SECURITY_KEY=CHANGE_SECURITY_KEY_HERE
+```
+Обязательно измените значение вашего уникального секретного ключа в файле `.env_push`, заменив шаблон `CHANGE_SECURITY_KEY_HERE` на ваше значение.
 
 <a id="management"></a>
 # Управление
@@ -324,9 +382,9 @@ firewall-cmd --add-port=8588/tcp --permanent && firewall-cmd --add-port=8589/tcp
 
 Используем способ, который работает одинаково на всех ОС.
 
-Заходим в sh-консоль контейнера `php` из под пользователя `root`:
+Заходим в sh-консоль контейнера `php` из под пользователя `bitrix`:
 ```bash
-docker compose exec --user=root php sh
+docker compose exec --user=bitrix php sh
 ```
 
 Переходим в корневой каталог сайта и скачиваем скрипт `bitrix_server_test.php`:
@@ -361,9 +419,9 @@ PS: для Docker Engine на Linux расположение каталога с
 
 Для восстановления из резервной копии скрипт `restore.php`: https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=135&CHAPTER_ID=02014&LESSON_PATH=10495.4496.2014
 
-Заходим в sh-консоль контейнера `php` из под пользователя `root`:
+Заходим в sh-консоль контейнера `php` из под пользователя `bitrix`:
 ```bash
-docker compose exec --user=root php sh
+docker compose exec --user=bitrix php sh
 ```
 
 Переходим в корневой каталог сайта и скачиваем скрипт(ы):
@@ -407,14 +465,12 @@ http://10.0.1.119:8588/
 - для `mysql` версии:
   - Имя хоста (алиас) - `mysql`
   - Имя суперпользователя - `root`
-  - Пароль суперпользователя - `BiTRiX@#2025`
+  - Пароль суперпользователя - был создан вами в главе `Пароли к базам данных mysql и postgresql`, хранится в файле `.env_sql`
 
-- для `pgsql` версии:
+- для `postgresql` версии:
   - Имя хоста (алиас) - `postgres`
   - Имя суперпользователя - `postgres`
-  - Пароль суперпользователя - `BiTRiX@#2025`
-
-Пароль суперпользователя для обеих баз хранится в файле `.env_sql` и по умолчанию его значение равно `BiTRiX@#2025`.
+  - Пароль суперпользователя - был создан вами в главе `Пароли к базам данных mysql и postgresql`, хранится в файле `.env_sql`
 
 <a id="restorebackup"></a>
 ## Восстановление из резервной копии
@@ -457,7 +513,7 @@ http://10.0.1.119:8588/
 
 - на табе `Настройки`:
   - указываем `Название сайта`
-  - задаем `URL сайта (без http://, например www.mysite.com)` -  10.0.1.119:8588 или 10.0.1.119:8589, dev.bx:8588 или dev.bx:8589
+  - задаем `URL сайта (без http://, например www.mysite.com)` -  10.0.1.119:8588 или 10.0.1.119:8589, dev.bx:8588 или dev.bx:8589 и т.д.
   - отмечаем опцию `Быстрая отдача файлов через Nginx` - она сконфигурирована
 
 - на табе `Авторизация`
@@ -500,9 +556,9 @@ http://10.0.1.119:8588/
 <a id="agentsoncron"></a>
 ## Выполнение агентов на cron
 
-Для работы cron заданий используется отдельный контейнер `cron` на базе образа `php`.
+Для работы cron заданий используется отдельный контейнер `cron` на базе образа `bx-php`.
 
-По умолчанию контейнер сконфигурирован на выполнение заданий модуля `Главный модуль (main)` раз в минуту:
+По умолчанию контейнер сконфигурирован на выполнение заданий модуля `Главный модуль (main)` раз в минуту, запуская это исполнение от пользователя `bitrix`:
 ```bash
 php -f /opt/www/bitrix/modules/main/tools/cron_events.php
 ```
@@ -550,7 +606,7 @@ mcedit /etc/periodic/daily/backup
 ```bash
 #!/bin/sh
 #
-php -f /opt/www/bitrix/modules/main/tools/backup.php; > /dev/null 2>&1
+su - bitrix -c 'php -f /opt/www/bitrix/modules/main/tools/backup.php; > /dev/null 2>&1'
 #
 ```
 
@@ -567,14 +623,27 @@ touch /etc/crontabs/cron.update
 
 Итог: раз в день (в 2ч ночи) контейнер запустит `backup` задание и выполнит резервное копирование.
 
+Детали создания резервной копии будут доступны в логе контейнера `cron`. Пример:
+```
+crond: USER root pid 122 cmd run-parts /etc/periodic/15min
+0.19 sec	Backup started to file: /opt/www/bitrix/backup/20250423_113000_full_vnw0wuf76rq6e5je.tar
+0.19 sec	Dumping database
+14.18 sec	Archiving database dump
+14.2 sec	Archiving files
+167.01 sec	Finished.
+Data size: 2569.42 M
+Archive size: 2569.42 M
+Time: 166.76 sec
+```
+
 Документация: https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=35&LESSON_ID=4464&LESSON_PATH=3906.4833.4464
 
 <a id="bxtemporaryfilesdirectory"></a>
 # Хранение временных файлов вне корневой директории сайта
 
-По умолчанию конфигурация `nginx` подготовлена таким образом, чтобы временные файлы хранились вне пределах корневой директории проекта.
+По умолчанию, конфигурация `nginx` предварительно подготовлена таким образом, чтобы временные файлы хранились вне пределов корневой директории сайта, т.к. это существенно повышает защищенность от известных атак.
 
-Чтобы окончательно заработало надо в административной части продукта на странице `Управление структурой` (`/bitrix/admin/fileman_admin.php?lang=ru&path=%2F`) отредактировать файл `/bitrix/php_interface/dbconn.php`, добавить строку:
+Для завершения настройки и усиления безопасности, необходимо в административной части продукта на странице `Управление структурой` (`/bitrix/admin/fileman_admin.php?lang=ru&path=%2F`) отредактировать файл `/bitrix/php_interface/dbconn.php`, добавить строку:
 ```bash
 define("BX_TEMPORARY_FILES_DIRECTORY", "/opt/.bx_temp");
 ```
@@ -593,10 +662,7 @@ Cохранить.
 
 Параметры переменных сред контейнеров хранятся в файлах `.env_push_pub` и `.env_push_sub`.
 
-Секретный ключ сгенерирован предварительно и хранится в файле `.env_push`. По умолчанию его значение равно:
-```bash
-oqq2gaHWkogJHDfYY8CRzBaR9d26ZuCmTHIZa2egZ2Kk3IN3QKWDRB2Ixlt7usICbi1Qlvla3MylfqRrl1Cxhy9Af0nKDVH4GYWtE7FXbTZO8Kb9TUpysiDvPvMvTUy2
-```
+Cекретный ключ для подписи соединения между клиентом и push-сервером хранится в файле `.env_push` и был создан вами в главе `Секретный ключ для push сервера`.
 
 Возвращаемся к главам `Адресация` и `Порты` этого документа. Определяемся по какой схеме работает сайт. Например:
 - используется локальный IP вида `10.0.1.119`
@@ -609,9 +675,11 @@ oqq2gaHWkogJHDfYY8CRzBaR9d26ZuCmTHIZa2egZ2Kk3IN3QKWDRB2Ixlt7usICbi1Qlvla3MylfqRr
 
 Запоминаем эти значения.
 
-В административной части продукта:
-- на странице `Управление структурой` (`/bitrix/admin/fileman_admin.php?lang=ru&path=%2F`) редактируем файл `/bitrix/.settings.php`
-- добавляем блок настроек, но меняем значения выше для `http` и `https` по примеру:
+В административной части продукта на странице `Управление структурой` (`/bitrix/admin/fileman_admin.php?lang=ru&path=%2F`) редактируем файл `/bitrix/.settings.php`:
+- добавляем блок настроек push сервера
+- меняем значения опции `signature_key`, указываем ваш сгенерированный уникальный секретный ключ вместо шаблона `CHANGE_SECURITY_KEY_HERE`
+- меняем значения для `http` и `https` на ваши
+- пример:
 ```bash
   'pull' => array(
     'value' => array(
@@ -633,7 +701,7 @@ oqq2gaHWkogJHDfYY8CRzBaR9d26ZuCmTHIZa2egZ2Kk3IN3QKWDRB2Ixlt7usICbi1Qlvla3MylfqRr
       'nginx_headers' => 'N',
       'push' => 'Y',
       'websocket' => 'Y',
-      'signature_key' => 'oqq2gaHWkogJHDfYY8CRzBaR9d26ZuCmTHIZa2egZ2Kk3IN3QKWDRB2Ixlt7usICbi1Qlvla3MylfqRrl1Cxhy9Af0nKDVH4GYWtE7FXbTZO8Kb9TUpysiDvPvMvTUy2',
+      'signature_key' => 'CHANGE_SECURITY_KEY_HERE',
       'signature_algo' => 'sha1',
       'guest' => 'N',
     ),
@@ -656,7 +724,7 @@ oqq2gaHWkogJHDfYY8CRzBaR9d26ZuCmTHIZa2egZ2Kk3IN3QKWDRB2Ixlt7usICbi1Qlvla3MylfqRr
 - переходим в настройки модуля `Поиск` (`/bitrix/admin/settings.php?lang=ru&mid=search`)
 - на табе `Морфология`:
   - выбираем `Полнотекстовый поиск с помощью` - `Sphinx`
-  - заполняем строку `Строка подключения для управления индексом (протокол MySql)` - `sphinx:3306`
+  - заполняем строку `Строка подключения для управления индексом (протокол MySql)` - `sphinx:9306`
   - поле `Идентификатор индекса` не меняем - `bitrix`
 
 Сохраняем настройки модуля.
@@ -674,6 +742,103 @@ oqq2gaHWkogJHDfYY8CRzBaR9d26ZuCmTHIZa2egZ2Kk3IN3QKWDRB2Ixlt7usICbi1Qlvla3MylfqRr
 
 <a id="email"></a>
 # Почта
+
+<a id="msmtpmta"></a>
+## Отправка почты с помощью msmtp
+
+Образ `bx-php` в своем составе содержит mta `msmtp`, предназначенный для отправки писем.
+
+Настройки msmtp для аккаунта `default` хранятся в файле `/opt/msmtp/.msmtprc`.
+
+Значения настроек msmtp зависят от smtp сервера, с которым он будет взаимодействовать при работе.
+
+Например, локальный почтовый сервер, отвечает на порту `25`, расположен на хосте `mail.server.local`, не использует в своей работе `tls` - в файле `/opt/msmtp/.msmtprc` настройки будут выглядеть:
+```bash
+...
+host mail.server.local
+port 25
+from info@mail.server.local
+user info@mail.server.local
+password password_example
+...
+tls off
+tls_starttls off
+tls_certcheck off
+...
+```
+
+Другой пример, почтовые сервисы вида `gmail`, `yahoo`, `yandex`, `rambler` и т.д.
+
+Настройки почтовых сервисов приведены в курсе: https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=37&LESSON_ID=12265
+
+Для `gmail`, который отвечает на порту `587`, расположен на хосте `smtp.gmail.com`, использует в своей работе `tls` - в файле `/opt/msmtp/.msmtprc` полный список настроек выглядит так:
+
+```bash
+# smtp account configuration for default
+account default
+logfile /proc/self/fd/2
+host smtp.gmail.com
+port 587
+from [LOGIN]@gmail.com
+user [LOGIN]@gmail.com
+password [APP_PASSWORD]
+auth login
+aliases /etc/aliases
+keepbcc off
+tls on
+tls_starttls on
+tls_certcheck on
+tls_trust_file /etc/ssl/certs/ca-certificates.crt
+protocol smtp
+```
+
+Настроим отправку писем через `gmail`.
+
+В блоке настроек выше меняем `APP_PASSWORD` на пароль приложения, `LOGIN` на ваш логин в почте Google.
+
+Заходим в sh-консоль контейнера `php` из под пользователя `root`:
+```bash
+docker compose exec --user=root php sh
+```
+
+Устанавливаем `mc` и выходим:
+```bash
+apk add mc
+exit
+```
+
+Заходим в sh-консоль контейнера `php` из под пользователя `bitrix`:
+```bash
+docker compose exec --user=bitrix php sh
+```
+
+Редактируем файл `/opt/msmtp/.msmtprc`, указываем приготовленный блок настроек:
+```bash
+mcedit /opt/msmtp/.msmtprc
+```
+
+Сохраняем файл и выходим из контейнера `php`.
+
+После в административной части продукта необходимо настроить модули, указав email отправителя (или От кого):
+- `Главный модуль (main)` (`bitrix/admin/settings.php?lang=ru&mid=main`)
+- `Email-маркетинг (sender)` (`/bitrix/admin/settings.php?lang=ru&mid=sender`)
+- `Интернет-магазин (sale)` (`/bitrix/admin/settings.php?lang=ru&mid=sale`)
+- `Подписка, рассылки (subscribe)` (`/bitrix/admin/settings.php?lang=ru&mid=subscribe`)
+- `Форум (forum)` (`/bitrix/admin/settings.php?lang=ru&mid=forum`)
+
+Проверить отправку почты можно на странице `Проверка системы` (`/bitrix/admin/site_checker.php?lang=ru`), запустив `Тестирование конфигурации`.
+
+Результаты будут отображены в блоке отчета `Дополнительные функции`:
+```
+Отправка почты - Отправлено. Время отправки: 1.36 сек.
+Отправка почтового сообщения больше 64Кб - Отправлено. Время отправки: 1.55 сек.
+```
+
+Детали отправки (или возникающие ошибки) будут доступны в логе контейнера `php`. Пример для двух писем из тестирования конфигурации:
+```
+Apr 12 22:52:14 host=smtp.gmail.com tls=on auth=on user=***@gmail.com from=***@gmail.com recipients=hosting_test@bitrixsoft.com mailsize=211 smtpstatus=250 smtpmsg='250 2.0.0 OK  1744498333 2adb3069b0e04-54d3d502717sm712937e87.144 - gsmtp' exitcode=EX_OK
+Apr 12 22:52:15 host=smtp.gmail.com tls=on auth=on user=***@gmail.com from=***@gmail.com recipients=hosting_test@bitrixsoft.com,noreply@bitrixsoft.com mailsize=200205 smtpstatus=250 smtpmsg='250 2.0.0 OK  1744498335 2adb3069b0e04-54d3d502618sm743850e87.107 - gsmtp' exitcode=EX_OK
+```
 
 <a id="emailsmtpmailer"></a>
 ## Отправка почты через SMTP-сервера отправителя
@@ -758,9 +923,9 @@ function custom_mail($to, $subject, $message, $additional_headers='', $additiona
 
 В контейнере с `php` по умолчанию доступен [PHP Composer](https://getcomposer.org/).
 
-Чтобы его использовать, заходим в sh-консоль контейнера `php` из под пользователя `root`:
+Чтобы его использовать, заходим в sh-консоль контейнера `php` из под пользователя `bitrix`:
 ```bash
-docker compose exec --user=root php sh
+docker compose exec --user=bitrix php sh
 ```
 
 Проверяем его версию командой:
@@ -791,13 +956,22 @@ php bitrix.php -h
 docker compose exec --user=root php sh
 ```
 
-Создадим каталог `/opt/browscap`, загрузим в него `browscap.ini`, подключим в настройках php. Выполняем:
+Устанавливаем `curl`, подключаем ini файл в настройках php, выходим:
 ```bash
-apk add mc curl
-mkdir -p /opt/browscap
+apk add curl
+echo 'browscap = /opt/browscap/php_browscap.ini' > /usr/local/etc/php/conf.d/browscap.ini
+exit
+```
+
+Заходим в sh-консоль контейнера `php` из под пользователя `bitrix`:
+```bash
+docker compose exec --user=bitrix php sh
+```
+
+В каталог `/opt/browscap` загрузим `browscap.ini`. Выполняем:
+```bash
 cd /opt/browscap
 curl http://browscap.org/stream?q=PHP_BrowsCapINI -o php_browscap.ini
-echo 'browscap = /opt/browscap/php_browscap.ini' > /usr/local/etc/php/conf.d/browscap.ini
 exit
 ```
 
@@ -817,14 +991,13 @@ docker compose restart php cron
 
 Возможно пригодится настроить если нужно отслеживать геопозицию устройства для `Истории входов`: https://helpdesk.bitrix24.ru/open/16615982/
 
-Заходим в sh-консоль контейнера `php` из под пользователя `root`:
+Заходим в sh-консоль контейнера `php` из под пользователя `bitrix`:
 ```bash
-docker compose exec --user=root php sh
+docker compose exec --user=bitrix php sh
 ```
 
-Создадим каталог `/opt/geoip2` и перейдем в него:
+Переходим в каталог `/opt/geoip2`:
 ```bash
-mkdir -p /opt/geoip2
 cd /opt/geoip2
 ```
 
@@ -837,7 +1010,7 @@ GeoLite2-Country.mmdb
 
 На странице `Список обработчиков геолокации` (`/bitrix/admin/geoip_handlers_list.php?lang=ru`) редактируем обработчик `GeoIP2` (`/bitrix/admin/geoip_handler_edit.php?lang=ru&ID=1&CLASS_NAME=%5CBitrix%5CMain%5CService%5CGeoIp%5CGeoIP2`).
 
-На табе Дополнительные:
+На табе `Дополнительные`:
 - выбираем - `Тип базы данных` - `GeoIP2/GeoLite2 City`
 - заполняем - `Абсолютный путь к файлу базы данных (*.mmdb)` - `/opt/geoip2/GeoLite2-City.mmdb`
 
@@ -898,37 +1071,48 @@ zip
 Большинство из них активны по умолчанию.
 
 Чтобы активировать php расширение:
+
 - заходим в sh-консоль контейнера `php` из под пользователя `root`:
 ```bash
 docker compose exec --user=root php sh
 ```
-- находим файл `/usr/local/etc/php/conf.d/docker-php-ext-***.ini`, где *** название расширения, пример для imagick:
+
+- находим файл `/usr/local/etc/php/conf.d/docker-php-ext-***.ini`, где `***` название расширения, пример для `imagick`:
 ```bash
+apk add mc
 mcedit /usr/local/etc/php/conf.d/docker-php-ext-imagick.ini
 ```
-- внутри файла меняем строку активируем подключение: `extension=***.so`, где *** название расширения:
+
+- внутри файла меняем строку активируем подключение: `extension=***.so`, где `***` название расширения:
 ```bash
 extension=imagick.so
 ```
+
 - сохраняем изменения и выходим
+
 - перезапускаем контейнеры `php` и `cron`:
 ```bash
 docker compose restart php cron
 ```
 
 Чтобы  деактивировать php расширение:
+
 - заходим в sh-консоль контейнера `php` из под пользователя `root`:
 ```bash
 docker compose exec --user=root php sh
 ```
-- находим файл `/usr/local/etc/php/conf.d/docker-php-ext-***.ini`, где *** название расширения, пример для imagick:
+
+- находим файл `/usr/local/etc/php/conf.d/docker-php-ext-***.ini`, где `***` название расширения, пример для `imagick`:
 ```bash
+apk add mc
 mcedit /usr/local/etc/php/conf.d/docker-php-ext-imagick.ini
 ```
-- внутри файла меняем строку деактивируем подключение: `; extension=***.so`, где *** название расширения:
+
+- внутри файла меняем строку деактивируем подключение: `; extension=***.so`, где `***` название расширения:
 ```bash
 ; extension=imagick.so
 ```
+
 - сохраняем изменения и выходим
 - перезапускаем контейнеры `php` и `cron`:
 ```bash
@@ -938,13 +1122,13 @@ docker compose restart php cron
 <a id="phpimagickimageengine"></a>
 ## PHP Imagick Engine для изображений
 
-Чтобы работать с изображениями с помощью PHP расширения Imagick (а не GD) активируем библиотеку для работы с изображениями на базе ImagickImageEngine.
+Чтобы работать с изображениями с помощью PHP расширения `Imagick` (а не `GD`) активируем библиотеку для работы с изображениями на базе `ImagickImageEngine`.
 
-Убедимся что в файле `/usr/local/etc/php/conf.d/docker-php-ext-imagick.ini` активировано подключение расширения `extension=imagick.so`.
+Убедимся что в файле `/usr/local/etc/php/conf.d/docker-php-ext-imagick.ini` активировано подключение расширения `imagick`. Как это сделать описано в главе `PHP расширения (extensions)`.
 
-Заходим в sh-консоль контейнера `php` из под пользователя `root`:
+Заходим в sh-консоль контейнера `php` из под пользователя `bitrix`:
 ```bash
-docker compose exec --user=root php sh
+docker compose exec --user=bitrix php sh
 ```
 
 Выполняем команду:
@@ -1164,7 +1348,7 @@ https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=35&LESSON_ID=2674#a
 
 Сохраняем настройки.
 
-В административной части продукта на странице `Подключения к memcached` (`/bitrix/admin/cluster_memcache_list.php?lang=ru&group_id=1`) доавляем новое подключение и указываем:
+В административной части продукта на странице `Подключения к memcached` (`/bitrix/admin/cluster_memcache_list.php?lang=ru&group_id=1`) добавляем новое подключение и указываем:
 - `Сервер` - `memcached`
 - `Порт` - `11211`
 - `Процент распределения нагрузки (0..100)` - `100`
@@ -1180,7 +1364,7 @@ https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=35&LESSON_ID=2674#a
 
 Сохраняем настройки.
 
-В административной части продукта на странице `Подключения к redis` (`/bitrix/admin/cluster_redis_list.php?lang=ru&group_id=1`) доавляем новое подключение и указываем:
+В административной части продукта на странице `Подключения к redis` (`/bitrix/admin/cluster_redis_list.php?lang=ru&group_id=1`) добавляем новое подключение и указываем:
 - `Сервер` - `redis`
 - `Порт` - `6379`
 
@@ -1196,14 +1380,44 @@ https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=35&LESSON_ID=2674#a
 
 Сгенерировать и использовать ssl сертификат в режиме самоподписи возможно с помощью отдельного контейнера `ssl` на базе образа `bx-ssl`.
 
+Данные, отображаемые в сертификатах корневого и промежуточного центров сертификации, хранятся в файле `.env_ssl`. Строки настроек начинаются с `CA_`.
+
+При необходимости отредактируйте файл `.env_ssl`, укажимте ваши данные по примеру:
+- `Название страны`: введите двухбуквенный код вашей страны (пример, `RU`)
+- `Название штата или провинции`: введите название штата, в котором официально зарегистрирована ваша организация (пример, `Kaliningrad Region`)
+- `Название населенного пункта`: введите название населенного пункта или города, в котором находится ваша компания (пример, `Kaliningrad`)
+- `Название организации`: укажите официальное название вашей организации (пример, `Dev Corporation Ltd`)
+- `Имя организационного подразделения`: введите название подразделения в вашей организации, отвечающего за управление сертификатами (пример, `Dev Corporation Ltd Unit`)
+- `Адрес электронной почты`: пример, `info@devcorporation.ltd`
+
+Данные, отображаемые в сертификате для домена, так же хранятся в файле `.env_ssl`. Строки настроек начинаются с `CERT_`.
+
+При необходимости отредактируйте файл `.env_ssl`, укажимте ваши данные по примеру:
+- `Название страны`: введите двухбуквенный код вашей страны (пример, `RU`)
+- `Название штата или провинции`: введите название штата, в котором официально зарегистрирована ваша организация (пример, `Kaliningrad Region`)
+- `Название населенного пункта`: введите название населенного пункта или города, в котором находится ваша компания (пример, `Kaliningrad`)
+- `Название организации`: укажите официальное название вашей организации (пример, `Dev Corporation Ltd`)
+- `Имя организационного подразделения`: введите название подразделения в вашей организации, отвечающего за управление сертификатами (пример, `Dev Corporation Ltd Unit`)
+- `Адрес электронной почты`: пример, `info@devcorporation.ltd`
+
+> [!IMPORTANT]
+> Если данные, отображаемые в сертификатах корневого и промежуточного центров сертификации, были изменены в файле `.env_ssl` необходимо пересоздать контейнер `ssl`.
+>
+> Для этого выполните последовательно команды остановки, удаления, пересоздания и запуска контейнера `ssl`:
+> ```bash
+> docker compose stop ssl
+> docker compose rm -f ssl
+> docker compose up -d
+> ```
+
 Одной командой разово генерируем сертификаты корневого и промежуточного центров сертификации:
 ```bash
-docker compose exec --user=root ssl bash -c "~/cas.sh"
+docker compose exec --user=bitrix ssl bash -c "~/cas.sh"
 ```
 
 Второй - сертификат и приватный ключ для домена `dev.bx`:
 ```bash
-docker compose exec --user=root ssl bash -c "~/srv.sh dev.bx"
+docker compose exec --user=bitrix ssl bash -c "~/srv.sh dev.bx"
 ```
 
 Итого в папке `/ssl/` внутри контейнера `ssl` будет набор файлов:
@@ -1218,7 +1432,7 @@ docker compose exec --user=root ssl bash -c "~/srv.sh dev.bx"
 
 Файл `dhparam.pem` не создается, а поставляется для примера. Если нужно его сделать уникальным выполните команду:
 ```bash
-docker compose exec --user=root ssl bash -c "openssl dhparam -out /ssl/dhparam.pem 4096"
+docker compose exec --user=bitrix ssl bash -c "openssl dhparam -out /ssl/dhparam.pem 4096"
 ```
 
 > [!IMPORTANT]
@@ -1278,12 +1492,14 @@ ssl_dhparam /ssl/dhparam.pem;
 ```bash
 cp /ssl/rootCA.cert.pem /opt/www/
 cp /ssl/intermediateCA.cert.pem /opt/www/
+chown bitrix:bitrix /opt/www/rootCA.cert.pem
+chown bitrix:bitrix /opt/www/intermediateCA.cert.pem
 exit
 ```
 
 Проверям настройки `nginx`:
 ```bash
-docker compose exec --user=root nginx sh -c "nginx -t"
+docker compose exec --user=bitrix nginx sh -c "nginx -t"
 ```
 
 Если никаких ошибок нет, перезапускаем nginx:
@@ -1350,7 +1566,16 @@ Connection to ssl://dev.bx:8589	Success
 Push сервер использует "секурные" веб сокеты, коннект происходит по `wss`. Пуши ходят, интерактивность работает.
 
 > [!IMPORTANT]
-> При удалении сайта не забудьте удалить сертификат корневого центра сертификации (`rootCA.cert.pem`) и сертификат промежуточного центра сертификации (`intermediateCA.cert.pem`) из ОС и браузера. Процесс удаления обратный добавлению.
+> При удалении сайта не забудьте удалить сертификат корневого центра сертификации (`rootCA.cert.pem`) и сертификат промежуточного центра сертификации (`intermediateCA.cert.pem`) из ОС и браузера.
+
+Для браузера `Mozilla Firefox`процесс удаления обратный добавлению.
+
+Для удаления сертификатов центров сертификации в ОС `Windows`:
+- запустите оснастку сертификатов, выполнив команду `certmgr.msc`
+- в ней перейдите `Сертификаты` - `Доверенные корневые центры сертификации` - `Сертификаты`
+- найдите сертификаты центров сертификации
+- сначала удалите сертификат промежуточного центра сертификации, затем сертификат корневого центра сертификации, выбрав их в списке по одному и в меню выбрав пункт `удалить`
+- подтвердите удаление
 
 <a id="presentcerts"></a>
 ## Бесплатный Lets Encrypt сертификат
@@ -1369,7 +1594,10 @@ docker compose exec [--user=[пользователь]] [сервис] [обол
 ```
 
 Где:
-- `пользователь`: пользователь ОС внутри контейнера, если пусто и ничего не указывать берется поведение по умолчанию, для `root` шаблон выглядит как `--user=root`
+- `пользователь`: пользователь ОС внутри контейнера:
+  - если пусто и ничего не указывать берется поведение по умолчанию
+  - для пользователя `bitrix` шаблон команды принимает вид `--user=bitrix`
+  - для пользователя `root` шаблон команды выглядит как `--user=root`
 - `сервис`: имя сервиса, указанное в файле `docker-compose.yml`, пример `mysql`, `nginx`, `php` и т.д.
 - `оболочка`: тип запускаемой оболочки внутри контейнера, пример `sh`, `bash`, `ash` и т.д.
 
@@ -1378,6 +1606,11 @@ docker compose exec [--user=[пользователь]] [сервис] [обол
 - заходим в bash-консоль контейнера `mysql`, пользователя не указываем:
 ```bash
 docker compose exec mysql bash
+```
+
+- заходим в sh-консоль контейнера `php` из под пользователя `bitrix`:
+```bash
+docker compose exec --user=bitrix php sh
 ```
 
 - заходим в sh-консоль контейнера `php` из под пользователя `root`:
@@ -1393,32 +1626,31 @@ docker compose exec --user=root redis sh -c "id"
 <a id="mysqlconsole"></a>
 ## MySQL
 
-Заходим в bash-консоль контейнера `mysql`, выполняя команду входа в консоль `mysql` из под пользователя `root` бд:
+Заходим в bash-консоль контейнера `mysql`, выполняя команду входа в консоль `mysql` из под пользователя `root` базы данных:
 ```bash
 docker compose exec mysql bash -c "mysql -u root -p"
 ```
 
-Вводим пароль суперпользователя `BiTRiX@#2025`, значение по умолчанию, которое хранится в файле `.env_sql`.
-
+Вводим пароль суперпользователя `root`, который был создан вами в главе `Пароли к базам данных mysql и postgresql`. Его значение хранится в файле `.env_sql`.
 
 Выполняем sql запросы. Для выхода вводим `exit`.
 
 <a id="postgresqlconsole"></a>
 ## PostgreSQL
 
-Заходим в bash-консоль контейнера `postgres`, выполняя команду входа в консоль `psql` из под пользователя `postgres`:
+Заходим в bash-консоль контейнера `postgres`, выполняя команду входа в консоль `psql` из под пользователя `postgres` базы данных:
 ```bash
 docker compose exec --user=postgres postgres bash -c "psql"
 ```
 
-Вводим пароль суперпользователя `BiTRiX@#2025`, значение по умолчанию, которое хранится в файле `.env_sql`.
+Вводим пароль суперпользователя `postgres`, который был создан вами в главе `Пароли к базам данных mysql и postgresql`. Его значение хранится в файле `.env_sql`.
 
 Выполняем sql запросы. Для выхода вводим `\q`.
 
 <a id="memcacheconsole"></a>
 ## Memcache
 
-Заходим в sh-консоль контейнера `memcache`, запуская консоль `nc`, указывая хост `127.0.0.1` и порт `11211`:
+Заходим в sh-консоль контейнера `memcached`, запуская консоль `nc`, указывая хост `127.0.0.1` и порт `11211`:
 ```bash
 docker compose exec --user=root memcached sh -c "nc 127.0.0.1 11211"
 ```
@@ -1453,7 +1685,7 @@ docker compose -f docker-compose.yml -f docker-compose-my.yml ps
 
 Для примера, запустим [Valkey](https://hub.docker.com/r/valkey/valkey/), добавив его в проект в сущесвующий `yml` файл.
 
-На странице valkey на DockerHub-е находдим нужный нам тег, пример `7.2.8-alpine`.
+На странице valkey на DockerHub-е находим нужный нам тег, пример `7.2.8-alpine`.
 
 Редактируем `docker-compose.yml` файл:
 
@@ -1494,7 +1726,7 @@ docker compose exec --user=root valkey sh -c "valkey-cli -h 127.0.0.1 -p 6379"
 
 Выполняем запросы (пример, `ping` или `KEYS *`). Выходим `exit`.
 
-Итого: мы успешно запустили новый контейнер valkey, проверили его работу. Теперь его можно использовать для хранеия кеша или хранения сессий по примеру как описано выше в этом файле.
+Итого: мы успешно запустили новый контейнер valkey, проверили его работу. Теперь его можно использовать для хранения кеша или хранения сессий по примеру как описано выше в этом файле.
 
 ------------------------------------------------
 

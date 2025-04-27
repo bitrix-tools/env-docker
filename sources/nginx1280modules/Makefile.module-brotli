@@ -1,0 +1,63 @@
+MODULES+=	brotli
+
+MODULE_SUMMARY_brotli=	3rd-party brotli compression dynamic modules
+
+include $(CONTRIB)/src/ngx_brotli/version
+
+MODULE_VERSION_brotli=	$(NGX_BROTLI_VERSION)
+MODULE_RELEASE_brotli=	1
+
+MODULE_VERSION_PREFIX_brotli=$(MODULE_TARGET_PREFIX)
+
+MODULE_SOURCES_brotli=	ngx_brotli-$(NGX_BROTLI_VERSION).tar.gz
+
+MODULE_CONFARGS_brotli=	--add-dynamic-module=$(MODSRC_PREFIX)ngx_brotli-$(NGX_BROTLI_VERSION)
+
+.deps-module-brotli:
+	cd $(CONTRIB) && make .sum-ngx_brotli
+	touch $@
+
+prerequisites-for-module-brotli:
+
+MODULE_BUILD_DEPENDS_brotli=brotli-dev cmake
+
+define MODULE_PREBUILD_brotli
+cd $$builddir/../ngx_brotli-$(NGX_BROTLI_VERSION)/deps \&\& \
+    rm -rf brotli \&\& \
+    wget https://github.com/cyrax13/brotli/archive/refs/tags/v$(NGX_BROTLI_VERSION).tar.gz \&\& \
+    tar -xvzf v$(NGX_BROTLI_VERSION).tar.gz \&\& \
+    mv brotli-$(NGX_BROTLI_VERSION) brotli \&\& \
+    rm -f v$(NGX_BROTLI_VERSION).tar.gz \&\& \
+    cd brotli \&\& \
+    mkdir out \&\& cd out \&\& \
+    cmake \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DBUILD_SHARED_LIBS=OFF \
+    -DCMAKE_C_FLAGS="-Ofast -m64 -march=native -mtune=native -flto -funroll-loops -ffunction-sections -fdata-sections -Wl,--gc-sections" \
+    -DCMAKE_CXX_FLAGS="-Ofast -m64 -march=native -mtune=native -flto -funroll-loops -ffunction-sections -fdata-sections -Wl,--gc-sections" \
+    -DCMAKE_INSTALL_PREFIX=./installed \
+    ../ \&\& \
+    cmake --build . --config Release --target brotlienc \&\& \
+    cd ../../../.. \
+exit 1
+endef
+export MODULE_PREBUILD_brotli
+
+define MODULE_POST_brotli
+cat <<BANNER
+----------------------------------------------------------------------
+
+The $(MODULE_SUMMARY_brotli) for $(MODULE_SUMMARY_PREFIX) have been installed.
+To enable these modules, add the following to /etc/nginx/nginx.conf
+and reload nginx:
+
+    load_module modules/ngx_http_brotli_filter_module.so;
+    load_module modules/ngx_http_brotli_static_module.so;
+
+Please refer to the modules documentation for further details:
+https://github.com/google/ngx_brotli
+
+----------------------------------------------------------------------
+BANNER
+endef
+export MODULE_POST_brotli

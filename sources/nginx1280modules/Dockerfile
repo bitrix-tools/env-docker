@@ -3,16 +3,16 @@
 #
 # PLEASE DO NOT EDIT IT DIRECTLY.
 #
-FROM nginx:1.26.3-alpine-slim
+FROM nginx:1.28.0-alpine-slim
 
-ENV NJS_VERSION=0.8.9
+ENV NJS_VERSION=0.8.10
 ENV NJS_RELEASE=1
 ENV BROTLI_VERSION=1.1.0
 ENV GEOIP2_VERSION=3.4
 ENV HEADERSMORE_VERSION=0.38
 ENV ZIP_VERSION=1.3.0
 ENV NDK_VERSION=0.3.3
-ENV LUA_VERSION=0.10.26
+ENV LUA_VERSION=0.10.28
 
 COPY brotli_makefile /tmp/brotli_makefile
 COPY brotli_shasum /tmp/brotli_shasum
@@ -26,10 +26,12 @@ RUN chown nobody:nobody /tmp/brotli_makefile && \
     chown nobody:nobody /tmp/nginx-module-brotli.xml && \
     chown nobody:nobody /tmp/Makefile.module-brotli
 
+COPY headersmore_shasum /tmp/headersmore_shasum
 COPY headersmore_version /tmp/headersmore_version
 COPY nginx-module-headers-more.xml /tmp/nginx-module-headers-more.xml
 
-RUN chown nobody:nobody /tmp/headersmore_version && \
+RUN chown nobody:nobody /tmp/headersmore_shasum && \
+    chown nobody:nobody /tmp/headersmore_version && \
     chown nobody:nobody /tmp/nginx-module-headers-more.xml
 
 COPY nginx-module-zip.copyright /tmp/nginx-module-zip.copyright
@@ -103,7 +105,7 @@ RUN set -x \
                 export HOME=${tempDir} \
                 && cd ${tempDir} \
                 && curl -f -L -O https://github.com/nginx/pkg-oss/archive/${NGINX_VERSION}-${PKG_RELEASE}.tar.gz \
-                && PKGOSSCHECKSUM=\"3a4e869eded0c71e92f522e94edffea7fbfb5e78886ea7e484342fa2e028c62099a67d08860c249bf93776da97b924225e0d849dbb4697b298afe5421d7d6fea *${NGINX_VERSION}-${PKG_RELEASE}.tar.gz\" \
+                && PKGOSSCHECKSUM=\"517bc18954ccf4efddd51986584ca1f37966833ad342a297e1fe58fd0faf14c5a4dabcb23519dca433878a2927a95d6bea05a6749ee2fa67a33bf24cdc41b1e4 *${NGINX_VERSION}-${PKG_RELEASE}.tar.gz\" \
                 && if [ \"\$(openssl sha512 -r ${NGINX_VERSION}-${PKG_RELEASE}.tar.gz)\" = \"\$PKGOSSCHECKSUM\" ]; then \
                     echo \"pkg-oss tarball checksum verification succeeded!\"; \
                 else \
@@ -119,6 +121,7 @@ RUN set -x \
                 && mv -f /tmp/brotli_version ${tempDir}/pkg-oss-${NGINX_VERSION}-${PKG_RELEASE}/contrib/src/ngx_brotli/version \
                 && mv -f /tmp/nginx-module-brotli.xml ${tempDir}/pkg-oss-${NGINX_VERSION}-${PKG_RELEASE}/docs/ \
                 && mv -f /tmp/Makefile.module-brotli ${tempDir}/pkg-oss-${NGINX_VERSION}-${PKG_RELEASE}/alpine/Makefile.module-brotli \
+                && mv -f /tmp/headersmore_shasum ${tempDir}/pkg-oss-${NGINX_VERSION}-${PKG_RELEASE}/contrib/src/headers-more-nginx-module/SHA512SUMS \
                 && mv -f /tmp/headersmore_version ${tempDir}/pkg-oss-${NGINX_VERSION}-${PKG_RELEASE}/contrib/src/headers-more-nginx-module/version \
                 && mv -f /tmp/nginx-module-headers-more.xml ${tempDir}/pkg-oss-${NGINX_VERSION}-${PKG_RELEASE}/docs/ \
                 && mv /tmp/Makefile.module-zip ${tempDir}/pkg-oss-${NGINX_VERSION}-${PKG_RELEASE}/alpine/ \

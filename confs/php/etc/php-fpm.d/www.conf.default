@@ -25,11 +25,10 @@
 ;       --allow-to-run-as-root option to work.
 ; Default Values: The user is set to master process running user by default.
 ;                 If the group is not set, the user's group is used.
-
-; user = www-data
-; group = www-data
-user = root
-group = root
+;user = www-data
+;group = www-data
+;user = bitrix
+;group = bitrix
 
 ; The address on which to accept FastCGI requests.
 ; Valid syntaxes are:
@@ -56,6 +55,9 @@ listen = 127.0.0.1:9000
 ;listen.owner = www-data
 ;listen.group = www-data
 ;listen.mode = 0660
+listen.owner = bitrix
+listen.group = bitrix
+listen.mode = 0660
 
 ; When POSIX Access Control Lists are supported you can set them using
 ; these options, value is a comma separated list of user/group names.

@@ -16,12 +16,12 @@ SRV=/ssl/servers
 CA_TXT='Certificate Authority'
 RCA_TXT='Root CA'
 ICA_TXT='Intermediate CA'
-COUNTRY_NAME='RU'
-STATE_OR_PROVINCE_NAME='Kaliningrad Region'
-LOCALITY_NAME='Kaliningrad'
-ORGANIZATION_NAME='Dev Corporation Ltd'
-ORGANIZATIONAL_UNIT_NAME='Dev Corporation Ltd Unit'
-EMAIL_ADDRESS='info@'${DOMAIN}
+COUNTRY_NAME=${CERT_COUNTRY_NAME:-RU}
+STATE_OR_PROVINCE_NAME=${CERT_STATE_OR_PROVINCE_NAME:-Kaliningrad Region}
+LOCALITY_NAME=${CERT_LOCALITY_NAME:-Kaliningrad}
+ORGANIZATION_NAME=${CERT_ORGANIZATION_NAME:-Dev Corporation Ltd}
+ORGANIZATIONAL_UNIT_NAME=${CERT_ORGANIZATIONAL_UNIT_NAME:-Dev Corporation Ltd Unit}
+EMAIL_ADDRESS=${CERT_EMAIL_ADDRESS:-info@info@devcorporation.ltd}
 # Wildcard option
 if [ "$WILD" = "W" ]
 then

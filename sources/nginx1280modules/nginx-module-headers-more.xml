@@ -1,0 +1,371 @@
+<?xml version="1.0" ?>
+<!DOCTYPE change_log SYSTEM "changes.dtd" >
+
+
+<change_log title="nginx_module_headers_more">
+
+
+<changes apply="nginx-module-headers-more" ver="0.38" rev="1" basever="1.26.3"
+         date="2025-02-08" time="19:10:47 -0800"
+         packager="Nginx Packaging &lt;nginx-packaging@f5.com&gt;">
+<change>
+<para>
+base version updated to 1.26.3-1
+</para>
+</change>
+
+</changes>
+
+
+<changes apply="nginx-module-headers-more" ver="0.37" rev="1" basever="1.26.2"
+         date="2024-08-17" time="19:10:47 -0800"
+         packager="Nginx Packaging &lt;nginx-packaging@f5.com&gt;">
+<change>
+<para>
+base version updated to 1.26.2-1
+</para>
+</change>
+
+</changes>
+
+
+<changes apply="nginx-module-headers-more" ver="0.37" rev="2" basever="1.26.1"
+         date="2024-05-29" time="19:10:47 -0800"
+         packager="Nginx Packaging &lt;nginx-packaging@f5.com&gt;">
+<change>
+<para>
+base version updated to 1.26.1-2
+</para>
+</change>
+
+</changes>
+
+
+<changes apply="nginx-module-headers-more" ver="0.37" rev="1" basever="1.26.0"
+         date="2024-04-25" time="08:13:47 -0800"
+         packager="Nginx Packaging &lt;nginx-packaging@f5.com&gt;">
+<change>
+<para>
+base version updated to 1.26.0-1
+</para>
+</change>
+
+</changes>
+
+
+<changes apply="nginx-module-headers-more" ver="0.37" rev="1" basever="1.25.5"
+         date="2024-02-14" time="08:13:47 -0800"
+         packager="Nginx Packaging &lt;nginx-packaging@f5.com&gt;">
+<change>
+<para>
+base version updated to 1.25.5-1
+</para>
+</change>
+
+</changes>
+
+
+<changes apply="nginx-module-headers-more" ver="0.37" rev="1" basever="1.25.4"
+         date="2024-02-14" time="08:13:47 -0800"
+         packager="Nginx Packaging &lt;nginx-packaging@f5.com&gt;">
+<change>
+<para>
+base version updated to 1.25.4-1
+</para>
+</change>
+
+</changes>
+
+
+<changes apply="nginx-module-headers-more" ver="0.35" rev="1" basever="1.25.3"
+         date="2023-11-20" time="15:35:00 -0700"
+         packager="Nginx Packaging &lt;nginx-packaging@f5.com&gt;">
+<change>
+<para>
+Updated headers-more module to 0.35 release.
+</para>
+</change>
+
+</changes>
+
+
+<changes apply="nginx-module-headers-more" ver="0.34" rev="1" basever="1.25.3"
+         date="2023-10-24" time="09:10:31 -0700"
+         packager="Nginx Packaging &lt;nginx-packaging@f5.com&gt;">
+<change>
+<para>
+base version updated to 1.25.3-1
+</para>
+</change>
+
+</changes>
+
+
+<changes apply="nginx-module-headers-more" ver="0.34" rev="1" basever="1.25.2"
+         date="2023-08-15" time="11:48:44 -0700"
+         packager="Nginx Packaging &lt;nginx-packaging@f5.com&gt;">
+<change>
+<para>
+base version updated to 1.25.2-1
+</para>
+</change>
+
+</changes>
+
+
+<changes apply="nginx-module-headers-more" ver="0.34" rev="1" basever="1.25.1"
+         date="2023-06-13" time="10:25:59 -0700"
+         packager="Nginx Packaging &lt;nginx-packaging@f5.com&gt;">
+<change>
+<para>
+base version updated to 1.25.1-1
+</para>
+</change>
+
+</changes>
+
+
+<changes apply="nginx-module-headers-more" ver="0.34" rev="1" basever="1.25.0"
+         date="2023-05-23" time="10:03:19 -0700"
+         packager="Nginx Packaging &lt;nginx-packaging@f5.com&gt;">
+<change>
+<para>
+base version updated to 1.25.0-1
+</para>
+</change>
+
+</changes>
+
+
+<changes apply="nginx-module-headers-more" ver="0.34" rev="1" basever="1.23.4"
+         date="2023-03-28" time="09:49:35 -0700"
+         packager="Nginx Packaging &lt;nginx-packaging@f5.com&gt;">
+<change>
+<para>
+base version updated to 1.23.4-1
+</para>
+</change>
+
+</changes>
+
+
+<changes apply="nginx-module-headers-more" ver="0.34" rev="1" basever="1.23.3"
+         date="2022-12-13" time="09:26:00 -0800"
+         packager="Nginx Packaging &lt;nginx-packaging@f5.com&gt;">
+<change>
+<para>
+base version updated to 1.23.3-1
+</para>
+</change>
+
+</changes>
+
+
+<changes apply="nginx-module-headers-more" ver="0.34" rev="1" basever="1.23.2"
+         date="2022-11-09" time="12:00:00 +0400"
+         packager="Nginx Packaging &lt;nginx-packaging@f5.com&gt;">
+<change>
+<para>
+Updated headers-more to git hash bea1be3bbf6af28f6aa8cf0c01c07ee1637e2bd0
+which is version 0.34
+</para>
+</change>
+
+</changes>
+
+
+<changes apply="nginx-module-headers-more" ver="0.33" rev="1" basever="1.23.2"
+         date="2022-10-19" time="13:32:28 +0400"
+         packager="Nginx Packaging &lt;nginx-packaging@f5.com&gt;">
+<change>
+<para>
+base version updated to 1.23.2-1
+</para>
+</change>
+
+</changes>
+
+
+<changes apply="nginx-module-headers-more" ver="0.33" rev="1" basever="1.23.1"
+         date="2022-07-19" time="19:06:54 +0400"
+         packager="Nginx Packaging &lt;nginx-packaging@f5.com&gt;">
+<change>
+<para>
+base version updated to 1.23.1-1
+</para>
+</change>
+
+</changes>
+
+
+<changes apply="nginx-module-headers-more" ver="0.33" rev="2" basever="1.23.0"
+         date="2022-07-14" time="17:00:00 +0400"
+         packager="Nginx Packaging &lt;nginx-packaging@f5.com&gt;">
+<change>
+<para>
+Updated headers-more to git hash d502e41996d24a382bd9c632e3ae3efa0a5fca66
+This fixes FTBFS with nginx 1.23.0+.
+</para>
+</change>
+
+</changes>
+
+
+<changes apply="nginx-module-headers-more" ver="0.33" rev="1" basever="1.23.0"
+         date="2022-06-21" time="20:54:23 +0400"
+         packager="Nginx Packaging &lt;nginx-packaging@f5.com&gt;">
+<change>
+<para>
+base version updated to 1.23.0-1
+</para>
+</change>
+
+</changes>
+
+
+<changes apply="nginx-module-headers-more" ver="0.33" rev="1" basever="1.21.6"
+         date="2022-01-25" time="18:13:46 +0300"
+         packager="Mikhail Isachenkov &lt;mikhail.isachenkov@nginx.com&gt;">
+<change>
+<para>
+base version updated to 1.21.6-1
+</para>
+</change>
+
+</changes>
+
+
+<changes apply="nginx-module-headers-more" ver="0.33" rev="1" basever="1.21.5"
+         date="2021-12-28" time="18:40:58 +0300"
+         packager="Konstantin Pavlov &lt;thresh@nginx.com&gt;">
+<change>
+<para>
+base version updated to 1.21.5-1
+</para>
+</change>
+
+</changes>
+
+
+<changes apply="nginx-module-headers-more" ver="0.33" rev="1" basever="1.21.4"
+         date="2021-11-02" time="18:01:49 +0300"
+         packager="Konstantin Pavlov &lt;thresh@nginx.com&gt;">
+<change>
+<para>
+base version updated to 1.21.4-1
+</para>
+</change>
+
+</changes>
+
+
+<changes apply="nginx-module-headers-more" ver="0.33" rev="1" basever="1.21.3"
+         date="2021-09-07" time="18:38:16 +0300"
+         packager="Konstantin Pavlov &lt;thresh@nginx.com&gt;">
+<change>
+<para>
+base version updated to 1.21.3-1
+</para>
+</change>
+
+</changes>
+
+
+<changes apply="nginx-module-headers-more" ver="0.33" rev="1" basever="1.21.2"
+         date="2021-08-31" time="18:35:29 +0300"
+         packager="Andrei Belov &lt;defan@nginx.com&gt;">
+<change>
+<para>
+base version updated to 1.21.2-1
+</para>
+</change>
+
+</changes>
+
+
+<changes apply="nginx-module-headers-more" ver="0.33" rev="1" basever="1.21.1"
+         date="2021-07-06" time="18:11:20 +0300"
+         packager="Konstantin Pavlov &lt;thresh@nginx.com&gt;">
+<change>
+<para>
+base version updated to 1.21.1-1
+</para>
+</change>
+
+</changes>
+
+
+<changes apply="nginx-module-headers-more" ver="0.33" rev="1" basever="1.21.0"
+         date="2021-05-25" time="16:01:22 +0300"
+         packager="Konstantin Pavlov &lt;thresh@nginx.com&gt;">
+<change>
+<para>
+base version updated to 1.21.0-1
+</para>
+</change>
+
+</changes>
+
+
+<changes apply="nginx-module-headers-more" ver="0.33" rev="1" basever="1.19.10"
+         date="2021-04-13" time="18:40:44 +0300"
+         packager="Andrei Belov &lt;defan@nginx.com&gt;">
+<change>
+<para>
+base version updated to 1.19.10-1
+</para>
+</change>
+
+</changes>
+
+
+<changes apply="nginx-module-headers-more" ver="0.33" rev="1" basever="1.19.9"
+         date="2021-03-30" time="17:58:30 +0300"
+         packager="Konstantin Pavlov &lt;thresh@nginx.com&gt;">
+<change>
+<para>
+base version updated to 1.19.9-1
+</para>
+</change>
+
+</changes>
+
+
+<changes apply="nginx-module-headers-more" ver="0.33" rev="1" basever="1.19.8"
+         date="2021-03-09" time="18:52:01 +0300"
+         packager="Konstantin Pavlov &lt;thresh@nginx.com&gt;">
+<change>
+<para>
+base version updated to 1.19.8-1
+</para>
+</change>
+
+</changes>
+
+
+<changes apply="nginx-module-headers-more" ver="0.33" rev="1" basever="1.19.7"
+         date="2021-02-17" time="16:29:15 +0300"
+         packager="Andrei Belov &lt;defan@nginx.com&gt;">
+<change>
+<para>
+base version updated to 1.19.7-1
+</para>
+</change>
+
+</changes>
+
+
+<changes apply="nginx-module-headers-more" ver="0.33" rev="1" basever="1.19.6"
+         date="2020-12-17" time="12:00:00 +0300"
+         packager="Andrei Belov &lt;defanator@gmail.com&gt;">
+
+<change>
+<para>
+Initial release of headers more nginx module package.
+</para>
+</change>
+
+</changes>
+
+
+</change_log> 

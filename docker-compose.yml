@@ -11,6 +11,12 @@ volumes:
     driver: local
   bxtemp_data:
     driver: local
+  msmtp_data:
+    driver: local
+  browscap_data:
+    driver: local
+  geoip2_data:
+    driver: local
   ssl_data:
     driver: local
 services:
@@ -27,7 +33,7 @@ services:
         aliases:
           - memcached
   redis:
-    image: redis:7.2.7-alpine
+    image: redis:7.2.8-alpine
     container_name: dev_redis
     restart: unless-stopped
     command: redis-server /usr/local/etc/redis/redis.conf
@@ -58,9 +64,7 @@ services:
         aliases:
           - postgres
   mysql:
-    image: bx-percona-server:8.0.41-rhel
-    build:
-      context: sources/bxpercona8041/
+    image: bx-percona-server:8.0.41-v1-rhel
     container_name: dev_mysql
     restart: unless-stopped
     env_file:
@@ -79,13 +83,11 @@ services:
         aliases:
           - mysql
   php:
-    image: bx-php:8.2.28-fpm-alpine
+    image: bx-php:8.2.28-fpm-v1-alpine
     build:
       context: sources/bxphp8228/
     container_name: dev_php
     restart: unless-stopped
-    command: php-fpm -R
-    user: root
     env_file:
       - .env
       - .env_php
@@ -95,18 +97,18 @@ services:
       - ./confs/php/etc/:/usr/local/etc/
       - www_data:/opt/www/
       - bxtemp_data:/opt/.bx_temp/
+      - msmtp_data:/opt/msmtp/
+      - browscap_data:/opt/browscap/
+      - geoip2_data:/opt/geoip2/
       - ssl_data:/ssl/
     networks:
       dev:
         aliases:
           - php
   nginx:
-    image: bx-nginx:1.26.3-alpine
-    build:
-      context: sources/bxnginx1263/
+    image: bx-nginx:1.28.0-v1-alpine
     container_name: dev_nginx
     restart: unless-stopped
-    user: root
     env_file:
       - .env
     ports:
@@ -122,9 +124,7 @@ services:
         aliases:
           - nginx
   push-sub:
-    image: bx-push:3.0-alpine
-    build:
-      context: sources/bxpush30/    
+    image: bx-push:3.0-v1-alpine
     container_name: dev_push_sub
     restart: unless-stopped
     env_file:
@@ -141,9 +141,7 @@ services:
     depends_on:
       - redis
   push-pub:
-    image: bx-push:3.0-alpine
-    build:
-      context: sources/bxpush30/      
+    image: bx-push:3.0-v1-alpine
     container_name: dev_push_pub
     restart: unless-stopped
     env_file:
@@ -160,9 +158,7 @@ services:
     depends_on:
       - redis
   sphinx:
-    image: bx-sphinx:2.2.11-alpine
-    build:
-      context: sources/bxsphinx2211/  
+    image: bx-sphinx:2.2.11-v1-alpine
     container_name: dev_sphinx
 #    ports:
 #      - "9306:9306"
@@ -177,9 +173,7 @@ services:
         aliases:
           - sphinx
   cron:
-    image: bx-php:8.2.28-fpm-alpine
-    build:
-      context: sources/bxphp8228/    
+    image: bx-php:8.2.28-fpm-v1-alpine
     container_name: dev_cron
     restart: unless-stopped
     command: crond -f -d 8
@@ -193,6 +187,9 @@ services:
       - ./confs/php/etc/:/usr/local/etc/
       - www_data:/opt/www/
       - bxtemp_data:/opt/.bx_temp/
+      - msmtp_data:/opt/msmtp/
+      - browscap_data:/opt/browscap/
+      - geoip2_data:/opt/geoip2/
     networks:
       dev:
         aliases:
@@ -200,14 +197,12 @@ services:
     depends_on:
       - php
   ssl:
-    image: bx-ssl:1.0-alpine
-    build:
-      context: sources/bxssl10/    
+    image: bx-ssl:1.0-v1-alpine
     container_name: dev_ssl
     restart: unless-stopped
-    user: root
     env_file:
       - .env
+      - .env_ssl
     volumes:
       - ssl_data:/ssl/
     networks:

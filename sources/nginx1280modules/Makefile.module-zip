@@ -1,0 +1,42 @@
+MODULES+=       zip
+
+MODULE_SUMMARY_zip=     3rd-party zip on fly dynamic modules
+
+MODULE_VERSION_zip=  1.3.0
+MODULE_RELEASE_zip=  1
+
+MODULE_VERSION_PREFIX_zip=$(MODULE_TARGET_PREFIX)
+
+MODULE_SOURCES_zip=  mod_zip-$(MODULE_VERSION_zip).tar.gz
+
+MODULE_CONFARGS_zip= --add-dynamic-module=$(MODSRC_PREFIX)mod_zip-$(MODULE_VERSION_zip)
+
+#.deps-module-zip:
+#        cd $(CONTRIB) && make .sum-ngx_http_zip_module
+#        touch $@
+
+MODULE_BUILD_DEPENDS_zip=libzip-dev
+
+define MODULE_ADD_CONTROL_TAGS_zip
+replaces="nginx-mod-http-zip"
+endef
+export MODULE_ADD_CONTROL_TAGS_zip
+
+define MODULE_POST_zip
+cat <<BANNER
+----------------------------------------------------------------------
+
+The $(MODULE_SUMMARY_zip) for $(MODULE_SUMMARY_PREFIX) have been installed.
+To enable these modules, add the following to /etc/nginx/nginx.conf
+and reload nginx:
+
+    load_module modules/ngx_http_zip_module.so;
+
+Please refer to the modules documentation for further details:
+https://github.com/evanmiller/mod_zip
+https://www.nginx.com/resources/wiki/modules/zip/
+
+----------------------------------------------------------------------
+BANNER
+endef
+export MODULE_POST_zip

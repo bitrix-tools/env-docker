@@ -15,13 +15,13 @@ SRV=/ssl/servers
 CA_TXT='Certificate Authority'
 RCA_TXT='Root CA'
 ICA_TXT='Intermediate CA'
-COUNTRY_NAME='RU'
-STATE_OR_PROVINCE_NAME='Kaliningrad Region'
-LOCALITY_NAME='Kaliningrad'
-ORGANIZATION_NAME='Dev Corporation Ltd'
-ORGANIZATIONAL_UNIT_NAME='Dev Corporation Ltd Unit'
-RCA_EMAIL_ADDRESS='info@devcorporation.ltd'
-ICA_EMAIL_ADDRESS='info@devcorporation.ltd'
+COUNTRY_NAME=${CA_COUNTRY_NAME:-RU}
+STATE_OR_PROVINCE_NAME=${CA_STATE_OR_PROVINCE_NAME:-Kaliningrad Region}
+LOCALITY_NAME=${CA_LOCALITY_NAME:-Kaliningrad}
+ORGANIZATION_NAME=${CA_ORGANIZATION_NAME:-Dev Corporation Ltd}
+ORGANIZATIONAL_UNIT_NAME=${CA_ORGANIZATIONAL_UNIT_NAME:-Dev Corporation Ltd Unit}
+RCA_EMAIL_ADDRESS=${CA_EMAIL_ADDRESS:-info@devcorporation.ltd}
+ICA_EMAIL_ADDRESS=${CA_EMAIL_ADDRESS:-info@devcorporation.ltd}
 #
 echo 'Create dirs...'
 mkdir -p ${SSL}

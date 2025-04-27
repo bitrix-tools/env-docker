@@ -1,4 +1,4 @@
-FROM percona/percona-server:8.0.41-32-amd64
+FROM percona/percona-server:8.0.41
 
 USER root
 
@@ -9,4 +9,4 @@ COPY etc_mycnfd_my.cnf /etc/my.cnf.d/my.cnf
 RUN chown -R mysql:root /etc/my.cnf /etc/my.cnf.d && \
     chmod -R ug+rwX /etc/my.cnf /etc/my.cnf.d
 
-USER mysql
+USER mysql:mysql

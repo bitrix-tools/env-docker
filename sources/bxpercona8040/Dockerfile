@@ -9,4 +9,4 @@ COPY etc_mycnfd_my.cnf /etc/my.cnf.d/my.cnf
 RUN chown -R mysql:root /etc/my.cnf /etc/my.cnf.d && \
     chmod -R ug+rwX /etc/my.cnf /etc/my.cnf.d
 
-USER mysql
+USER mysql:mysql
