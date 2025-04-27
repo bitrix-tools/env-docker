@@ -1,4 +1,4 @@
-FROM node:20 AS builder
+FROM node:22-alpine AS builder
 
 USER root
 
@@ -14,7 +14,7 @@ RUN tar xzvvf $PUSH && rm -f $PUSH
 
 RUN npm install --omit=dev
 
-FROM node:20-alpine AS production
+FROM node:22-alpine AS production
 
 USER root
 
