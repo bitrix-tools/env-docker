@@ -59,6 +59,8 @@ services:
           - postgres
   mysql:
     image: bx-percona-server:8.0.41-rhel
+    build:
+      context: sources/bxpercona8041/
     container_name: dev_mysql
     restart: unless-stopped
     env_file:
@@ -78,6 +80,8 @@ services:
           - mysql
   php:
     image: bx-php:8.2.28-fpm-alpine
+    build:
+      context: sources/bxphp8228/
     container_name: dev_php
     restart: unless-stopped
     command: php-fpm -R
@@ -98,6 +102,8 @@ services:
           - php
   nginx:
     image: bx-nginx:1.26.3-alpine
+    build:
+      context: sources/bxnginx1263/
     container_name: dev_nginx
     restart: unless-stopped
     user: root
@@ -117,6 +123,8 @@ services:
           - nginx
   push-sub:
     image: bx-push:3.0-alpine
+    build:
+      context: sources/bxpush30/    
     container_name: dev_push_sub
     restart: unless-stopped
     env_file:
@@ -134,6 +142,8 @@ services:
       - redis
   push-pub:
     image: bx-push:3.0-alpine
+    build:
+      context: sources/bxpush30/      
     container_name: dev_push_pub
     restart: unless-stopped
     env_file:
@@ -151,6 +161,8 @@ services:
       - redis
   sphinx:
     image: bx-sphinx:2.2.11-alpine
+    build:
+      context: sources/bxsphinx2211/  
     container_name: dev_sphinx
 #    ports:
 #      - "9306:9306"
@@ -166,6 +178,8 @@ services:
           - sphinx
   cron:
     image: bx-php:8.2.28-fpm-alpine
+    build:
+      context: sources/bxphp8228/    
     container_name: dev_cron
     restart: unless-stopped
     command: crond -f -d 8
@@ -187,6 +201,8 @@ services:
       - php
   ssl:
     image: bx-ssl:1.0-alpine
+    build:
+      context: sources/bxssl10/    
     container_name: dev_ssl
     restart: unless-stopped
     user: root
