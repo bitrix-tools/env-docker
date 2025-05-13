@@ -1,3 +1,4 @@
+# TODO: find tag wothout package eith HIGH score of CVE (c-ares│CVE-2025-31498,  xz,xz-libs │ CVE-2025-31115)
 FROM php:8.2.28-fpm-alpine AS builder
 
 USER root
@@ -51,6 +52,7 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-xpm --with-we
 
 RUN docker-php-ext-install mysqli pdo_mysql bz2 pgsql pdo_pgsql zip gd opcache ldap exif intl calendar sodium gettext pspell xml xmlwriter xsl shmop sysvmsg sysvsem sysvshm sockets memcache memcached apcu mcrypt msgpack igbinary redis xhprof xdebug amqp ssh2 imagick
 
+# TODO: find tag wothout package eith HIGH score of CVE (c-ares│CVE-2025-31498,  xz,xz-libs │ CVE-2025-31115)
 FROM php:8.2.28-fpm-alpine AS production
 
 USER root
