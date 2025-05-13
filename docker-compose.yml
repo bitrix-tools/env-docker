@@ -26,8 +26,19 @@ services:
     restart: unless-stopped
     env_file:
       - .env
+    init: true
+    read_only: true
+    cgroup: private
+    security_opt:
+      - no-new-privileges
+    cap_drop:
+      - ALL
+    tmpfs:
+      - /tmp:noexec,nodev,nosuid
+      - /var/tmp:noexec,nodev,nosuid
+      - /run:noexec,nodev,nosuid   
 #    ports:
-#      - "11211:11211"
+#      - "127.0.0.1:11211:11211"
     networks:
       dev:
         aliases:
@@ -39,8 +50,23 @@ services:
     command: redis-server /usr/local/etc/redis/redis.conf
     env_file:
       - .env
+    init: true
+    read_only: true
+    cgroup: private
+    security_opt:
+      - no-new-privileges
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETUID
+      - SETGID
+    tmpfs:
+      - /tmp:noexec,nodev,nosuid
+      - /var/tmp:noexec,nodev,nosuid
+      - /run:noexec,nodev,nosuid
 #    ports:
-#      - "6379:6379"
+#      - "127.0.0.1:6379:6379"
     volumes:
       - redis_data:/data
       - ./confs/redis/redis.conf:/usr/local/etc/redis/redis.conf
