@@ -1,0 +1,49 @@
+{
+    "servers":
+    [
+        {
+            "name": "${PUSH_PUB_MODE}-${PUSH_PUB_PORT}",
+            "port": ${PUSH_PUB_PORT},
+            "hostname": "0.0.0.0",
+            "backlog": 1024,
+            "routes":
+	    {
+                "pub": "${PUB_URI}",
+                "stat": "/server-stat/",
+                "rest": "${REST_URI}"
+            }
+        }
+    ],
+    "publishMode": true,
+    "dataDir": "${WORKDIR}/data",
+    "processUniqueId": "${PUSH_PUB_MODE}-${PUSH_PUB_PORT}",
+    "clusterMode": true,
+    "storage":
+    {
+        "type": "redis",
+        "messageTLL": 86400,
+        "channelTLL": 86400,
+        "onlineTLL": 120,
+        "onlineDelta": 10,
+        "host": "${REDIS_HOST}",
+        "port": ${REDIS_PORT}
+    },
+    "security":
+    {
+        "key": "${PUSH_SECURITY_KEY}"
+    },
+    "limits":
+    {
+        "maxPayload": 1048576,
+        "maxConnPerChannel": 100,
+        "maxMessagesPerRequest": 100,
+        "maxChannelsPerRequest": 100,
+        "maxRequestsPerSecond": 50
+    },
+    "debug":
+    {
+        "folderName": "/var/log/push-server",
+        "ip": ["127.0.0.256"],
+        "trustProxy": true
+    }
+}

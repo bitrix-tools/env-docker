@@ -70,12 +70,26 @@ services:
     volumes:
       - redis_data:/data
       - ./confs/redis/redis.conf:/usr/local/etc/redis/redis.conf
+    init: true
+    cgroup: private
+    security_opt:
+      - no-new-privileges
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETUID
+      - SETGID
+    tmpfs:
+      - /tmp:noexec,nodev,nosuid
+      - /var/tmp:noexec,nodev,nosuid
+      - /dev/shm:noexec,nodev,nosuid
     networks:
       dev:
         aliases:
           - redis
   postgres:
-    image: postgres:16.8-bookworm
+    image: postgres:16.9-bookworm
     container_name: dev_postgres
     restart: unless-stopped
     env_file:
@@ -85,6 +99,22 @@ services:
 #      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    init: true
+    cgroup: private
+    security_opt:
+      - no-new-privileges
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - FOWNER
+      - SETUID
+      - SETGID
+      - DAC_OVERRIDE
+    tmpfs:
+      - /tmp:noexec,nodev,nosuid
+      - /var/tmp:noexec,nodev,nosuid
+      - /dev/shm:noexec,nodev,nosuid
     networks:
       dev:
         aliases:
@@ -102,8 +132,18 @@ services:
     volumes:
       - mysql_log_data:/var/log/mysql
       - mysql_lib_data:/var/lib/mysql
+    init: true
+    cgroup: private
+    security_opt:
+      - no-new-privileges
+    cap_drop:
+      - ALL
     cap_add:
       - SYS_NICE
+    tmpfs:
+      - /tmp:noexec,nodev,nosuid
+      - /var/tmp:noexec,nodev,nosuid
+      - /dev/shm:noexec,nodev,nosuid
     networks:
       dev:
         aliases:
@@ -127,6 +167,16 @@ services:
       - browscap_data:/opt/browscap/
       - geoip2_data:/opt/geoip2/
       - ssl_data:/ssl/
+    init: true
+    cgroup: private
+    security_opt:
+      - no-new-privileges
+    cap_drop:
+      - ALL
+    tmpfs:
+      - /tmp:noexec,nodev,nosuid
+      - /var/tmp:noexec,nodev,nosuid
+      - /dev/shm:noexec,nodev,nosuid
     networks:
       dev:
         aliases:
@@ -145,12 +195,27 @@ services:
       - www_data:/opt/www/
       - bxtemp_data:/opt/.bx_temp/
       - ssl_data:/ssl/
+    init: true
+    cgroup: private
+    security_opt:
+      - no-new-privileges
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETUID
+      - SETGID
+      - NET_BIND_SERVICE
+    tmpfs:
+      - /tmp:noexec,nodev,nosuid
+      - /var/tmp:noexec,nodev,nosuid
+      - /dev/shm:noexec,nodev,nosuid
     networks:
       dev:
         aliases:
           - nginx
   push-sub:
-    image: bx-push:3.0-v1-alpine
+    image: bx-push:3.1-v1-alpine
     container_name: dev_push_sub
     restart: unless-stopped
     env_file:
@@ -160,6 +225,16 @@ services:
       - .env_redis
 #    ports:
 #      - "8010:8010"
+    init: true
+    cgroup: private
+    security_opt:
+      - no-new-privileges
+    cap_drop:
+      - ALL
+    tmpfs:
+      - /tmp:noexec,nodev,nosuid
+      - /var/tmp:noexec,nodev,nosuid
+      - /dev/shm:noexec,nodev,nosuid
     networks:
       dev:
         aliases:
@@ -167,7 +242,7 @@ services:
     depends_on:
       - redis
   push-pub:
-    image: bx-push:3.0-v1-alpine
+    image: bx-push:3.1-v1-alpine
     container_name: dev_push_pub
     restart: unless-stopped
     env_file:
@@ -177,6 +252,16 @@ services:
       - .env_redis
 #    ports:
 #      - "9010:9010"
+    init: true
+    cgroup: private
+    security_opt:
+      - no-new-privileges
+    cap_drop:
+      - ALL
+    tmpfs:
+      - /tmp:noexec,nodev,nosuid
+      - /var/tmp:noexec,nodev,nosuid
+      - /dev/shm:noexec,nodev,nosuid
     networks:
       dev:
         aliases:
@@ -194,6 +279,16 @@ services:
       - .env
     volumes:
       - ./confs/sphinx/sphinx.conf:/opt/sphinx/conf/sphinx.conf
+    init: true
+    cgroup: private
+    security_opt:
+      - no-new-privileges
+    cap_drop:
+      - ALL
+    tmpfs:
+      - /tmp:noexec,nodev,nosuid
+      - /var/tmp:noexec,nodev,nosuid
+      - /dev/shm:noexec,nodev,nosuid
     networks:
       dev:
         aliases:
@@ -216,6 +311,19 @@ services:
       - msmtp_data:/opt/msmtp/
       - browscap_data:/opt/browscap/
       - geoip2_data:/opt/geoip2/
+    init: true
+    cgroup: private
+    security_opt:
+      - no-new-privileges
+    cap_drop:
+      - ALL
+    cap_add:
+      - SETUID
+      - SETGID
+    tmpfs:
+      - /tmp:noexec,nodev,nosuid
+      - /var/tmp:noexec,nodev,nosuid
+      - /dev/shm:noexec,nodev,nosuid
     networks:
       dev:
         aliases:
@@ -231,10 +339,51 @@ services:
       - .env_ssl
     volumes:
       - ssl_data:/ssl/
+    init: true
+    cgroup: private
+    security_opt:
+      - no-new-privileges
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - FOWNER
+      - SETUID
+      - SETGID
+    tmpfs:
+      - /tmp:noexec,nodev,nosuid
+      - /var/tmp:noexec,nodev,nosuid
+      - /dev/shm:noexec,nodev,nosuid
     networks:
       dev:
         aliases:
           - ssl
+    depends_on:
+      - nginx
+  lego:
+    image: bx-lego:4.23.1-v1-alpine
+    container_name: dev_lego
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "80:80"
+    volumes:
+      - ssl_data:/ssl/
+    init: true
+    cgroup: private
+    security_opt:
+      - no-new-privileges
+    cap_drop:
+      - ALL
+    tmpfs:
+      - /tmp:noexec,nodev,nosuid
+      - /var/tmp:noexec,nodev,nosuid
+      - /dev/shm:noexec,nodev,nosuid
+    networks:
+      dev:
+        aliases:
+          - lego
     depends_on:
       - nginx
 networks:

@@ -1,0 +1,38 @@
+{
+    "servers":
+    [
+        {
+            "name": "${PUSH_SUB_MODE}-${PUSH_SUB_PORT}",
+            "port": ${PUSH_SUB_PORT},
+            "hostname": "0.0.0.0",
+            "backlog": 1024,
+            "routes":
+	    {
+                "sub": "${SUB_URI}"
+            }
+        }
+    ],
+    "dataDir": "${WORKDIR}/data",
+    "clusterMode": true,
+    "processUniqueId": "${PUSH_SUB_MODE}-${PUSH_SUB_PORT}",
+    "storage":
+    {
+        "type": "redis",
+        "messageTLL": 86400,
+        "channelTLL": 86400,
+        "onlineTLL": 120,
+        "onlineDelta": 10,
+        "host": "${REDIS_HOST}",
+        "port": ${REDIS_PORT}
+    },
+    "security":
+    {
+        "key": "${PUSH_SECURITY_KEY}"
+    },
+    "debug":
+    {
+        "folderName": "/var/log/push-server",
+        "ip": ["127.0.0.256"],
+        "trustProxy": true
+    }
+}

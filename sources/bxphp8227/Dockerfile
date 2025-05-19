@@ -3,31 +3,31 @@ FROM php:8.2.27-fpm-alpine AS builder
 USER root
 
 RUN apk add --no-cache --virtual .build-deps \
-file \
-autoconf \
-dpkg-dev dpkg \
-g++ \
-gcc \
-libc-dev \
-make \
-pkgconf \
-re2c \
-bzip2-dev \
-postgresql16-dev \
-zip libzip libzip-dev \
-freetype freetype-dev libpng libpng-dev libjpeg-turbo libjpeg-turbo-dev libxpm libxpm-dev libwebp libwebp-dev \
-openldap-dev libldap libsasl cyrus-sasl-dev \
-gettext gettext-dev \
-aspell-dev \
-libxml2-dev \
-libxslt-dev \
-linux-headers \
-libmemcached libmemcached-dev libmemcached-libs \
-libmcrypt-dev \
-lz4 lz4-dev liblzf liblzf-dev zstd zstd-dev \
-rabbitmq-c rabbitmq-c-dev libpq libpq-dev \
-libssh2-dev \
-imagemagick imagemagick-dev
+    file \
+    autoconf \
+    dpkg-dev dpkg \
+    g++ \
+    gcc \
+    libc-dev \
+    make \
+    pkgconf \
+    re2c \
+    bzip2-dev \
+    postgresql16-dev \
+    zip libzip libzip-dev \
+    freetype freetype-dev libpng libpng-dev libjpeg-turbo libjpeg-turbo-dev libxpm libxpm-dev libwebp libwebp-dev \
+    openldap-dev libldap libsasl cyrus-sasl-dev \
+    gettext gettext-dev \
+    aspell-dev \
+    libxml2-dev \
+    libxslt-dev \
+    linux-headers \
+    libmemcached libmemcached-dev libmemcached-libs \
+    libmcrypt-dev \
+    lz4 lz4-dev liblzf liblzf-dev zstd zstd-dev \
+    rabbitmq-c rabbitmq-c-dev libpq libpq-dev \
+    libssh2-dev \
+    imagemagick imagemagick-dev
 
 RUN docker-php-source extract && \
     mkdir -p /usr/src/php/ext/memcache && curl -fsSL https://github.com/cyrax13/pecl.php.net/raw/main/memcache-8.2.tgz | tar xvz -C "/usr/src/php/ext/memcache" --strip 1 && \

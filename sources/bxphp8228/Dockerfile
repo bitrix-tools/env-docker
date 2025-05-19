@@ -4,31 +4,31 @@ FROM php:8.2.28-fpm-alpine AS builder
 USER root
 
 RUN apk add --no-cache --virtual .build-deps \
-file \
-autoconf \
-dpkg-dev dpkg \
-g++ \
-gcc \
-libc-dev \
-make \
-pkgconf \
-re2c \
-bzip2-dev \
-postgresql16-dev \
-zip libzip libzip-dev \
-freetype freetype-dev libpng libpng-dev libjpeg-turbo libjpeg-turbo-dev libxpm libxpm-dev libwebp libwebp-dev \
-openldap-dev libldap libsasl cyrus-sasl-dev \
-gettext gettext-dev \
-aspell-dev \
-libxml2-dev \
-libxslt-dev \
-linux-headers \
-libmemcached libmemcached-dev libmemcached-libs \
-libmcrypt-dev \
-lz4 lz4-dev liblzf liblzf-dev zstd zstd-dev \
-rabbitmq-c rabbitmq-c-dev libpq libpq-dev \
-libssh2-dev \
-imagemagick imagemagick-dev
+    file \
+    autoconf \
+    dpkg-dev dpkg \
+    g++ \
+    gcc \
+    libc-dev \
+    make \
+    pkgconf \
+    re2c \
+    bzip2-dev \
+    postgresql16-dev \
+    zip libzip libzip-dev \
+    freetype freetype-dev libpng libpng-dev libjpeg-turbo libjpeg-turbo-dev libxpm libxpm-dev libwebp libwebp-dev \
+    openldap-dev libldap libsasl cyrus-sasl-dev \
+    gettext gettext-dev \
+    aspell-dev \
+    libxml2-dev \
+    libxslt-dev \
+    linux-headers \
+    libmemcached libmemcached-dev libmemcached-libs \
+    libmcrypt-dev \
+    lz4 lz4-dev liblzf liblzf-dev zstd zstd-dev \
+    rabbitmq-c rabbitmq-c-dev libpq libpq-dev \
+    libssh2-dev \
+    imagemagick imagemagick-dev
 
 RUN docker-php-source extract && \
     mkdir -p /usr/src/php/ext/memcache && curl -fsSL https://github.com/cyrax13/pecl.php.net/raw/main/memcache-8.2.tgz | tar xvz -C "/usr/src/php/ext/memcache" --strip 1 && \
@@ -39,7 +39,7 @@ RUN docker-php-source extract && \
     mkdir -p /usr/src/php/ext/igbinary && curl -fsSL https://github.com/cyrax13/pecl.php.net/raw/main/igbinary-3.2.16.tgz | tar xvz -C "/usr/src/php/ext/igbinary" --strip 1 && \
     mkdir -p /usr/src/php/ext/redis && curl -fsSL https://github.com/cyrax13/pecl.php.net/raw/main/redis-6.2.0.tgz | tar xvz -C "/usr/src/php/ext/redis" --strip 1 && \
     mkdir -p /usr/src/php/ext/xhprof && curl -fsSL https://github.com/cyrax13/pecl.php.net/raw/main/xhprof-2.3.10.tgz | tar xvz -C "/usr/src/php/ext/xhprof" --strip 1 && \
-    mkdir -p /usr/src/php/ext/xdebug && curl -fsSL https://github.com/cyrax13/pecl.php.net/raw/main/xdebug-3.4.2.tgz | tar xvz -C "/usr/src/php/ext/xdebug" --strip 1 && \
+    mkdir -p /usr/src/php/ext/xdebug && curl -fsSL https://github.com/cyrax13/pecl.php.net/raw/main/xdebug-3.4.3.tgz | tar xvz -C "/usr/src/php/ext/xdebug" --strip 1 && \
     mkdir -p /usr/src/php/ext/amqp && curl -fsSL https://github.com/cyrax13/pecl.php.net/raw/main/amqp-2.1.2.tgz | tar xvz -C "/usr/src/php/ext/amqp" --strip 1 && \
     mkdir -p /usr/src/php/ext/ssh2 && curl -fsSL https://github.com/cyrax13/pecl.php.net/raw/main/ssh2-1.4.1.tgz | tar xvz -C "/usr/src/php/ext/ssh2" --strip 1 && \
     mkdir -p /usr/src/php/ext/imagick && curl -fsSL https://github.com/cyrax13/pecl.php.net/raw/main/imagick-3.8.0.tgz | tar xvz -C "/usr/src/php/ext/imagick" --strip 1 && \
