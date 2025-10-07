@@ -142,8 +142,6 @@ services:
           - mysql
   php:
     image: quay.io/bitrix24/php:8.2.29-fpm-v1-alpine
-    #image: quay.io/bitrix24/php:8.3.26-fpm-v1-alpine
-    #image: quay.io/bitrix24/php:8.4.13-fpm-v1-alpine
     container_name: dev_php
     restart: unless-stopped
     env_file:
@@ -153,8 +151,6 @@ services:
 #      - "9000:9000"
     volumes:
       - ./confs/php82/etc/:/usr/local/etc/
-      #- ./confs/php83/etc/:/usr/local/etc/
-      #- ./confs/php84/etc/:/usr/local/etc/
       - www_data:/opt/www/
       - bxtemp_data:/opt/.bx_temp/
       - msmtp_data:/opt/msmtp/

@@ -2993,25 +2993,11 @@ docker compose up -d
 
 Разберем пример использования версии `8.3.x` вместо текущей версии `8.2.x`.
 
-До первого запуска проекта редактируем файл `docker-compose.yml`, в разделе `services` находим сервис `php`.
+До первого запуска проекта создаём файл `docker-compose.override.yml`:
 
-В строку с текущей версией `8.2.x` добавляем `#`, в строке с версией `8.3.x` убираем `#`:
 ```bash
-php:
-#image: quay.io/bitrix24/php:8.2.29-fpm-v1-alpine
-image: quay.io/bitrix24/php:8.3.26-fpm-v1-alpine
-#image: quay.io/bitrix24/php:8.4.13-fpm-v1-alpine
+cp docker-compose.php83.yml docker-compose.override.yml
 ```
-
-В секции `volumes` в строку с текущей версией `.../82/...` добавляем `#`, в строке с версией `.../83/...` убираем `#`:
-```bash
-volumes:
-#- ./confs/php82/etc/:/usr/local/etc/
-- ./confs/php83/etc/:/usr/local/etc/
-#- ./confs/php84/etc/:/usr/local/etc/
-```
-
-Продолжаем редактировать файл `docker-compose.yml`, в разделе `services` находим сервис `cron`. Повторяем настройку таким же образом, как описано для сервиса `php` выше.
 
 Запускаем все контейнеры, оставляем их работать в фоне:
 ```bash

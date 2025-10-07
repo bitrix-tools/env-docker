@@ -1,0 +1,6 @@
+services:
+  php:
+    php:
+    image: quay.io/bitrix24/php:8.3.26-fpm-v1-alpine
+    volumes:
+      - ./confs/php83/etc/:/usr/local/etc/

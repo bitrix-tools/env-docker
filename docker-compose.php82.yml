@@ -1,0 +1,9 @@
+services:
+  php:
+    image: quay.io/bitrix24/php:8.2.29-fpm-v1-alpine
+    volumes:
+      - ./confs/php82/etc/:/usr/local/etc/
+  cron:
+    image: quay.io/bitrix24/php:8.2.29-fpm-v1-alpine
+    volumes:
+      - ./confs/php82/etc/:/usr/local/etc/
