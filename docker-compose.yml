@@ -87,11 +87,11 @@ services:
         aliases:
           - redis
   postgres:
-    #image: postgres:14.22-trixie
-    #image: postgres:15.17-trixie
-    image: postgres:16.13-trixie
-    #image: postgres:17.9-trixie
-    #image: postgres:18.3-trixie
+    #image: postgres:14.23-trixie
+    #image: postgres:15.18-trixie
+    image: postgres:16.14-trixie
+    #image: postgres:17.10-trixie
+    #image: postgres:18.4-trixie
     container_name: dev_postgres
     restart: unless-stopped
     env_file:
