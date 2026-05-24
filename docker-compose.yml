@@ -193,7 +193,7 @@ services:
       - mysql
       - postgres
   nginx:
-    image: quay.io/bitrix24/nginx:1.30.1-v1-alpine
+    image: quay.io/bitrix24/nginx:1.30.2-v1-alpine
     container_name: dev_nginx
     restart: unless-stopped
     env_file:
