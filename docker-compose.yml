@@ -30,7 +30,7 @@ volumes:
     driver: local
 services:
   memcached:
-    image: memcached:1.6.41-alpine
+    image: memcached:1.6.42-alpine
     container_name: dev_memcached
     restart: unless-stopped
     env_file:
