@@ -58,6 +58,7 @@ services:
     image: redis:8.2.7-alpine
     #image: redis:8.4.4-alpine
     #image: redis:8.6.4-alpine
+    #image: redis:8.8.0-alpine
     container_name: dev_redis
     restart: unless-stopped
     command: redis-server /usr/local/etc/redis/redis.conf
