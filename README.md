@@ -3039,9 +3039,9 @@ Lego 4.35.x
 #image: redis:7.2.14-alpine
 #image: redis:7.4.9-alpine
 #image: redis:8.0.6-alpine
-#image: redis:8.2.6-alpine
-image: redis:8.4.3-alpine
-#image: redis:8.6.3-alpine
+#image: redis:8.2.7-alpine
+image: redis:8.4.4-alpine
+#image: redis:8.6.4-alpine
 ```
 
 Запускаем все контейнеры, оставляем их работать в фоне:
@@ -3049,7 +3049,7 @@ image: redis:8.4.3-alpine
 docker compose up -d
 ```
 
-Таким образом Redis будет использовать контейнер с версией `8.4.3`.
+Таким образом Redis будет использовать контейнер с версией `8.4.4`.
 
 Для версий `7.2.x`, `7.4.x`, `8.0.x`, `8.6.x` настройку выполняем аналогичным образом.
 
@@ -3155,13 +3155,13 @@ docker compose up -d
 
 В этот список попадают (формат `название`:`полный_тег_с_указанием_версии_и_ос`):
 - `postgres:16.14-trixie`
-- `redis:8.2.6-alpine`
+- `redis:8.2.7-alpine`
 - `memcached:1.6.42-alpine`
 
 Можно предварительно скачать ПО из списка выше с помощью команд:
 ```bash
 docker pull postgres:16.14-trixie
-docker pull redis:8.2.6-alpine
+docker pull redis:8.2.7-alpine
 docker pull memcached:1.6.42-alpine
 ```
 
