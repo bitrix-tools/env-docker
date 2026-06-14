@@ -1,0 +1,85 @@
+[client]
+port = 3306
+default-character-set = utf8mb4
+user = mysql
+
+[mysqld_safe]
+nice = 0
+#log-error = /var/log/mysql/error.log
+user = mysql
+
+[mysqld]
+#default-authentication-plugin = mysql_native_password # deprecated
+#authentication_policy = "mysql_native_password,," # mysql_native_password deprecated 8.0.34
+authentication_policy = "*,,"
+user = mysql
+port = 3306
+basedir = /usr
+datadir = /var/lib/mysql
+server-id = 101
+skip-external-locking
+default-storage-engine = innodb
+pid-file = /var/run/mysqld/mysqld.pid
+transaction_isolation = READ-COMMITTED
+max_allowed_packet = 16M
+myisam-recover-options = BACKUP
+explicit_defaults_for_timestamp = 1
+#expire_logs_days = 30
+#binlog_expire_logs_seconds = 2592000
+max_binlog_size = 1024M
+sql_mode = ""
+tmpdir = /tmp
+innodb_file_per_table
+innodb_buffer_pool_size = 1024M
+innodb_flush_log_at_trx_commit = 2
+#innodb_log_file_size = 64M # deprecated percona 8.0.30
+innodb-redo-log-capacity = 104857600
+innodb_flush_method = O_DIRECT
+innodb_strict_mode = OFF
+innodb_default_row_format = DYNAMIC
+character-set-server = utf8mb4
+collation-server = utf8mb4_0900_ai_ci
+init-connect = "SET NAMES utf8mb4 COLLATE utf8mb4_0900_ai_ci"
+#skip-character-set-client-handshake # deprecated 8.0.35
+skip-name-resolve
+max_connections = 43
+table_open_cache = 8096
+thread_cache_size = 96
+thread_stack = 512K
+max_heap_table_size = 128M
+tmp_table_size = 128M
+key_buffer_size = 48M
+join_buffer_size = 8M
+sort_buffer_size = 8M
+bulk_insert_buffer_size = 2M
+myisam_sort_buffer_size = 8M
+general_log = 0
+#general_log_file = /var/log/mysql/mysql.log
+#log_error = /var/log/mysql/error.log
+skip-log-bin
+#log_bin = /var/lib/mysql/mysql-binlog
+log_bin_index = /var/lib/mysql/mysql-binlog.index
+relay_log = /var/lib/mysql/mysql-relay-binlog
+relay_log_index = /var/lib/mysql/mysql-relay-binlog.index
+slow_query_log = 0
+#slow_query_log_file = /var/log/mysql/slow.log
+sync_binlog = 0
+tls_version = TLSv1.2,TLSv1.3
+secure-log-path=/var/lib/mysql-files
+percona_telemetry_disable = 1 # disable percona telemetry, from 8.0.37 and above
+
+[system_default_sect]
+MinProtocol = TLSv1.2
+
+[mysqldump]
+quick
+quote-names
+max_allowed_packet = 16M
+default-character-set = utf8mb4
+user = mysql
+
+[mysql]
+user = mysql
+
+[isamchk]
+key_buffer = 16M
