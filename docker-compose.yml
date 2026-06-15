@@ -158,7 +158,7 @@ services:
   php:
     image: quay.io/bitrix24/php:8.2.31-fpm-v1-alpine
     #image: quay.io/bitrix24/php:8.3.31-fpm-v1-alpine
-    #image: quay.io/bitrix24/php:8.4.21-fpm-v1-alpine
+    #image: quay.io/bitrix24/php:8.4.22-fpm-v1-alpine
     container_name: dev_php
     restart: unless-stopped
     env_file:
@@ -308,7 +308,7 @@ services:
   cron:
     image: quay.io/bitrix24/php:8.2.31-fpm-v1-alpine
     #image: quay.io/bitrix24/php:8.3.31-fpm-v1-alpine
-    #image: quay.io/bitrix24/php:8.4.21-fpm-v1-alpine
+    #image: quay.io/bitrix24/php:8.4.22-fpm-v1-alpine
     container_name: dev_cron
     restart: unless-stopped
     command: crond -f -d 8
