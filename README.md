@@ -262,7 +262,7 @@ TZ=Europe/Moscow
 date.timezone = Europe/Moscow
 ```
 
-Где `XXX` в пути к файлу `timezone.ini` - версия `php`. По умолчанию равна `82`, возможные [альтернативные варианты](#phpandcronalternativeversions) `83` и `84`.
+Где `XXX` в пути к файлу `timezone.ini` - версия `php`. По умолчанию равна `82`, возможные [альтернативные варианты](#phpandcronalternativeversions) `83`, `84` и `85`.
 
 При необходимости смените значение в обоих файлах до создания и запуска контейнеров проекта. Например, для версии php `8.2.x` и часового пояса `Europe/Kaliningrad` измените значение:
 
@@ -3108,7 +3108,7 @@ docker compose up -d
 <a id="phpandcronalternativeversions"></a>
 ### PHP и Cron
 
-Доступные альтернативные версии PHP: `8.3.x`, `8.4.x`.
+Доступные альтернативные версии PHP: `8.3.x`, `8.4.x`, `8.5.x`.
 
 Разберем пример использования версии `8.3.x` вместо текущей версии `8.2.x`.
 
@@ -3120,6 +3120,7 @@ php:
 #image: quay.io/bitrix24/php:8.2.32-fpm-v1-alpine
 image: quay.io/bitrix24/php:8.3.32-fpm-v1-alpine
 #image: quay.io/bitrix24/php:8.4.23-fpm-v1-alpine
+#image: quay.io/bitrix24/php:8.5.8-fpm-v1-alpine
 ```
 
 В секции `volumes` в строку с текущей версией `.../82/...` добавляем `#`, в строке с версией `.../83/...` убираем `#`:
@@ -3128,6 +3129,7 @@ volumes:
 #- ./confs/php82/etc/:/usr/local/etc/
 - ./confs/php83/etc/:/usr/local/etc/
 #- ./confs/php84/etc/:/usr/local/etc/
+#- ./confs/php85/etc/:/usr/local/etc/
 ```
 
 Продолжаем редактировать файл `docker-compose.yml`, в разделе `services` находим сервис `cron`. Повторяем настройку таким же образом, как описано для сервиса `php` выше.
@@ -3139,7 +3141,7 @@ docker compose up -d
 
 Таким образом PHP и Cron будут использовать контейнеры с версией `8.3.x`. Читать и применять настройки из одного каталога для версии `8.3.x`.
 
-Для версии `8.4.x` все шаги выше выполняем аналогичным образом.
+Для версий `8.4.x` и `8.5.x` все шаги выше выполняем аналогичным образом.
 
 <a id="dockerimages"></a>
 # Сборка или скачивание Docker образов
@@ -3183,8 +3185,8 @@ docker pull memcached:1.6.44-alpine
   - собираем `bitrix24/nginx:1.30.3-v1-alpine`
 - интерпретатор PHP-кода:
   - готового совместимого образа PHP нет
-  - берем по умолчанию образ `php:8.2.32-fpm-alpine3.23` / `php:8.3.32-fpm-alpine3.23` / `php:8.4.23-fpm-alpine3.23` и добавляем то, что нам надо через пару слоев сверху
-  - собираем `bitrix24/php:8.2.32-fpm-v1-alpine` / `bitrix24/php:8.3.32-fpm-v1-alpine` / `bitrix24/php:8.4.23-fpm-v1-alpine`
+  - берем по умолчанию образ `php:8.2.32-fpm-alpine3.23` / `php:8.3.32-fpm-alpine3.23` / `php:8.4.23-fpm-alpine3.23` / `php:8.5.8-fpm-alpine3.23` и добавляем то, что нам надо через пару слоев сверху
+  - собираем `bitrix24/php:8.2.32-fpm-v1-alpine` / `bitrix24/php:8.3.32-fpm-v1-alpine` / `bitrix24/php:8.4.23-fpm-v1-alpine` / `bitrix24/php:8.5.8-fpm-v1-alpine`
 - поиск:
   - готового образа Sphinx нет, но есть собранный пакет `sphinx` на базе `Alpine Linux` в официальном репозитории ОС
   - собираем `bitrix24/sphinx:2.2.11-v2-alpine`, установив пакет
@@ -3217,6 +3219,7 @@ docker pull nginx:1.30.3-alpine-slim
 docker pull php:8.2.32-fpm-alpine3.23
 docker pull php:8.3.32-fpm-alpine3.23
 docker pull php:8.4.23-fpm-alpine3.23
+docker pull php:8.5.8-fpm-alpine3.23
 docker pull node:22
 docker pull node:22-alpine
 docker pull alpine:3.21
@@ -3255,6 +3258,12 @@ docker buildx build --platform linux/arm64,linux/amd64 --provenance=false -f Doc
 ```bash
 cd env-docker/sources/bxphp8423/
 docker buildx build --platform linux/arm64,linux/amd64 --provenance=false -f Dockerfile -t bitrix24/php:8.4.23-fpm-v1-alpine --no-cache .
+```
+
+- `bitrix24/php` для версии `8.5.x`:
+```bash
+cd env-docker/sources/bxphp858/
+docker buildx build --platform linux/arm64,linux/amd64 --provenance=false -f Dockerfile -t bitrix24/php:8.5.8-fpm-v1-alpine --no-cache .
 ```
 
 - `bitrix24/nginx`:

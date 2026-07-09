@@ -159,6 +159,7 @@ services:
     image: quay.io/bitrix24/php:8.2.32-fpm-v1-alpine
     #image: quay.io/bitrix24/php:8.3.32-fpm-v1-alpine
     #image: quay.io/bitrix24/php:8.4.23-fpm-v1-alpine
+    #image: quay.io/bitrix24/php:8.5.8-fpm-v1-alpine
     container_name: dev_php
     restart: unless-stopped
     env_file:
@@ -170,6 +171,7 @@ services:
       - ./confs/php82/etc/:/usr/local/etc/
       #- ./confs/php83/etc/:/usr/local/etc/
       #- ./confs/php84/etc/:/usr/local/etc/
+      #- ./confs/php85/etc/:/usr/local/etc/
       - www_data:/opt/www/
       - bxtemp_data:/opt/.bx_temp/
       - msmtp_data:/opt/msmtp/
@@ -309,6 +311,7 @@ services:
     image: quay.io/bitrix24/php:8.2.32-fpm-v1-alpine
     #image: quay.io/bitrix24/php:8.3.32-fpm-v1-alpine
     #image: quay.io/bitrix24/php:8.4.23-fpm-v1-alpine
+    #image: quay.io/bitrix24/php:8.5.8-fpm-v1-alpine
     container_name: dev_cron
     restart: unless-stopped
     command: crond -f -d 8
@@ -322,6 +325,7 @@ services:
       - ./confs/php82/etc/:/usr/local/etc/
       #- ./confs/php83/etc/:/usr/local/etc/
       #- ./confs/php84/etc/:/usr/local/etc/
+      #- ./confs/php85/etc/:/usr/local/etc/
       - www_data:/opt/www/
       - bxtemp_data:/opt/.bx_temp/
       - msmtp_data:/opt/msmtp/
