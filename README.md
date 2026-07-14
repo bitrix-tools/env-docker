@@ -157,17 +157,17 @@ docker compose -f docker-compose-test.yml ps
 
 Для этого используем образ `Alpine Linux`:
 ```bash
-docker pull alpine:3.22
+docker pull alpine:3.23
 ```
 
 Генерируем уникальный пароль для суперпользователя `root` базы данных `MySQL` с помощью команды:
 ```bash
-docker container run --rm --name mysql_password_generate alpine:3.22 sh -c "(cat /dev/urandom | tr -dc A-Za-z0-9\?\!\@\-\_\+\%\(\)\{\}\[\]\= | head -c 16) | tr -d '\' | tr -d '^' && echo ''"
+docker container run --rm --name mysql_password_generate alpine:3.23 sh -c "(cat /dev/urandom | tr -dc A-Za-z0-9\?\!\@\-\_\+\%\(\)\{\}\[\]\= | head -c 16) | tr -d '\' | tr -d '^' && echo ''"
 ```
 
 Генерируем уникальный пароль для суперпользователя `postgres` базы данных `PostgreSQL` с помощью команды:
 ```bash
-docker container run --rm --name postgresql_password_generate alpine:3.22 sh -c "(cat /dev/urandom | tr -dc A-Za-z0-9\?\!\@\-\_\+\%\(\)\{\}\[\]\= | head -c 16) | tr -d '\' | tr -d '^' && echo ''"
+docker container run --rm --name postgresql_password_generate alpine:3.23 sh -c "(cat /dev/urandom | tr -dc A-Za-z0-9\?\!\@\-\_\+\%\(\)\{\}\[\]\= | head -c 16) | tr -d '\' | tr -d '^' && echo ''"
 ```
 
 Шаблон пароля для суперпользователя `root` базы данных `MySQL` (`CHANGE_MYSQL_ROOT_PASSWORD_HERE`) и шаблон пароля для суперпользователя `postgres` базы данных `PostgreSQL` (`CHANGE_POSTGRESQL_POSTGRES_PASSWORD_HERE`) хранятся в файле `.env_sql` в виде:
@@ -190,12 +190,12 @@ POSTGRES_PASSWORD="CHANGE_POSTGRESQL_POSTGRES_PASSWORD_HERE"
 
 Для этого используем образ `Alpine Linux`:
 ```bash
-docker pull alpine:3.22
+docker pull alpine:3.23
 ```
 
 Генерируем уникальный пароль для `Redis` с помощью команды:
 ```bash
-docker container run --rm --name redis_password_generate alpine:3.22 sh -c "(cat /dev/urandom | tr -dc A-Za-z0-9\.\,\?\!\@\$\-\+\=\(\)\{\}\[\] | head -c 16) | tr -d '\' | tr -d '^' && echo ''"
+docker container run --rm --name redis_password_generate alpine:3.23 sh -c "(cat /dev/urandom | tr -dc A-Za-z0-9\.\,\?\!\@\$\-\+\=\(\)\{\}\[\] | head -c 16) | tr -d '\' | tr -d '^' && echo ''"
 ```
 
 Шаблон пароля для сервиса `Redis` (`CHANGE_REDIS_PASSWORD_HERE`) хранится:
@@ -233,12 +233,12 @@ REDIS_PASSWORD="AbCdEfGh@159!753"
 
 Для этого используем образ `Alpine Linux`:
 ```bash
-docker pull alpine:3.22
+docker pull alpine:3.23
 ```
 
 Генерируем уникальный секретный ключ с помощью команды:
 ```bash
-docker container run --rm --name push_server_key_generate alpine:3.22 sh -c "(cat /dev/urandom | tr -dc A-Za-z0-9 | head -c 128) && echo ''"
+docker container run --rm --name push_server_key_generate alpine:3.23 sh -c "(cat /dev/urandom | tr -dc A-Za-z0-9 | head -c 128) && echo ''"
 ```
 
 Шаблон секретного ключа (`CHANGE_SECURITY_KEY_HERE`) для подписи соединения между клиентом и Push-сервером хранится в файле `.env_push` в виде:
