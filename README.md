@@ -2947,7 +2947,7 @@ docker compose -f docker-compose.yml -f docker-compose-my.yml ps
 
 Для примера, запустим [Valkey](https://hub.docker.com/r/valkey/valkey/), добавив его в проект в существующий `yml` файл.
 
-На странице valkey на DockerHub-е находим нужный нам тег, пример `7.2.12-alpine`.
+На странице valkey на DockerHub-е находим нужный нам тег, пример `7.2.14-alpine`.
 
 Редактируем `docker-compose.yml` файл:
 
@@ -2960,7 +2960,7 @@ docker compose -f docker-compose.yml -f docker-compose-my.yml ps
 - в раздел `services` добавляем описание сервиса:
 ```bash
   valkey:
-    image: valkey/valkey:7.2.12-alpine
+    image: valkey/valkey:7.2.14-alpine
     container_name: dev_valkey
     restart: unless-stopped
     command: valkey-server
@@ -3036,13 +3036,13 @@ Lego 4.35.x
 
 До первого запуска проекта редактируем файл `docker-compose.yml`, в разделе `services` находим сервис `redis`. В строку с текущей версией `8.2.x` добавляем `#`, в строке с версией `8.4.x` убираем `#`. Итоговый вид:
 ```bash
-#image: redis:7.2.14-alpine
-#image: redis:7.4.9-alpine
+#image: redis:7.2.15-alpine
+#image: redis:7.4.10-alpine
 #image: redis:8.0.6-alpine
-#image: redis:8.2.7-alpine
-image: redis:8.4.4-alpine
-#image: redis:8.6.4-alpine
-#image: redis:8.8.0-alpine
+#image: redis:8.2.8-alpine
+image: redis:8.4.5-alpine
+#image: redis:8.6.5-alpine
+#image: redis:8.8.1-alpine
 ```
 
 Запускаем все контейнеры, оставляем их работать в фоне:
@@ -3050,7 +3050,7 @@ image: redis:8.4.4-alpine
 docker compose up -d
 ```
 
-Таким образом Redis будет использовать контейнер с версией `8.4.4`.
+Таким образом Redis будет использовать контейнер с версией `8.4.5`.
 
 Для версий `7.2.x`, `7.4.x`, `8.0.x`, `8.6.x`, `8.8.x` настройку выполняем аналогичным образом.
 
@@ -3158,13 +3158,13 @@ docker compose up -d
 
 В этот список попадают (формат `название`:`полный_тег_с_указанием_версии_и_ос`):
 - `postgres:16.14-trixie`
-- `redis:8.2.7-alpine`
+- `redis:8.2.8-alpine`
 - `memcached:1.6.45-alpine`
 
 Можно предварительно скачать ПО из списка выше с помощью команд:
 ```bash
 docker pull postgres:16.14-trixie
-docker pull redis:8.2.7-alpine
+docker pull redis:8.2.8-alpine
 docker pull memcached:1.6.45-alpine
 ```
 
