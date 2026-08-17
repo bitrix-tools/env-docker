@@ -3064,11 +3064,11 @@ docker compose up -d
 
 До первого запуска проекта редактируем файл `docker-compose.yml`, в разделе `services` находим сервис `postgres`. В строку с текущей версией `16.x` добавляем `#`, в строке с версией `17.x` убираем `#`. Итоговый вид:
 ```bash
-#image: postgres:14.23-trixie
-#image: postgres:15.18-trixie
-#image: postgres:16.14-trixie
-image: postgres:17.10-trixie
-#image: postgres:18.4-trixie
+#image: postgres:14.24-trixie
+#image: postgres:15.19-trixie
+#image: postgres:16.15-trixie
+image: postgres:17.11-trixie
+#image: postgres:18.6-trixie
 ```
 
 Запускаем все контейнеры, оставляем их работать в фоне:
@@ -3076,7 +3076,7 @@ image: postgres:17.10-trixie
 docker compose up -d
 ```
 
-Таким образом PostgreSQL будет использовать контейнер с версией `17.10`.
+Таким образом PostgreSQL будет использовать контейнер с версией `17.11`.
 
 Для версий `14.x`, `15.x`, `18.x` настройку выполняем аналогичные образом.
 
@@ -3158,13 +3158,13 @@ docker compose up -d
 - `Memcached`: https://hub.docker.com/_/memcached
 
 В этот список попадают (формат `название`:`полный_тег_с_указанием_версии_и_ос`):
-- `postgres:16.14-trixie`
+- `postgres:16.15-trixie`
 - `redis:8.2.8-alpine`
 - `memcached:1.6.45-alpine`
 
 Можно предварительно скачать ПО из списка выше с помощью команд:
 ```bash
-docker pull postgres:16.14-trixie
+docker pull postgres:16.15-trixie
 docker pull redis:8.2.8-alpine
 docker pull memcached:1.6.45-alpine
 ```
