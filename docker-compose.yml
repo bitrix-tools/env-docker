@@ -52,14 +52,14 @@ services:
         aliases:
           - memcached
   redis:
-    #image: redis:7.2.15-alpine
-    #image: redis:7.4.10-alpine
+    #image: redis:7.2.16-alpine
+    #image: redis:7.4.11-alpine
     #image: redis:8.0.6-alpine
-    image: redis:8.2.8-alpine
-    #image: redis:8.4.5-alpine
-    #image: redis:8.6.5-alpine
-    #image: redis:8.8.1-alpine
-    #image: redis:8.10.0-alpine
+    image: redis:8.2.9-alpine
+    #image: redis:8.4.6-alpine
+    #image: redis:8.6.6-alpine
+    #image: redis:8.8.2-alpine
+    #image: redis:8.10.1-alpine
     container_name: dev_redis
     restart: unless-stopped
     command: redis-server /usr/local/etc/redis/redis.conf
