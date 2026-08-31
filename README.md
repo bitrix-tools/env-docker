@@ -550,7 +550,7 @@ http://10.0.1.119:8588/
 
 Для остальных модулей производим настройки, если они нужны.
 
-Описание значений полей смотрите документации модуля.
+Описание значений полей смотрите в документации модуля.
 
 <a id="sitechecker"></a>
 # Проверка системы
@@ -3089,7 +3089,7 @@ docker compose up -d
 <a id="mysqlalternativeversions"></a>
 ### MySQL
 
-Доступные альтернативные версии MySQL (Percona Server): `8.4.x`.
+Доступные альтернативные версии MySQL (Percona Server): `8.4.x`, `9.7.x`.
 
 Разберем пример использования версии `8.4.x` вместо текущей версии `8.0.x`.
 
@@ -3097,6 +3097,7 @@ docker compose up -d
 ```bash
 #image: quay.io/bitrix24/percona-server:8.0.46-v1-rhel
 image: quay.io/bitrix24/percona-server:8.4.11-v1-rhel
+#image: quay.io/bitrix24/percona-server:9.7.1-v1-rhel
 ```
 
 Запускаем все контейнеры, оставляем их работать в фоне:
@@ -3105,6 +3106,37 @@ docker compose up -d
 ```
 
 Таким образом MySQL будет использовать контейнер с версией `8.4.11`.
+
+Для версий `9.7.x` настройку выполняем аналогичные образом.
+
+> [!CAUTION]
+> Внимание! В MySQL начиная с версии `9.7.x` удалены клаcсические sql-функции хеширования, такие как `md5()`, `sha1()` и т.д.
+> Их `обязательно` нужно вернуть, подключив компонент `classic_hashing`.
+>
+> Для этого:
+>
+> - заходим в bash-консоль контейнера `mysql`, выполняя команду входа в консоль `mysql` из-под пользователя `root` базы данных:
+> ```bash
+> docker compose exec mysql bash -c "mysql -u root -p"
+> ```
+> - вводим пароль суперпользователя `root`, который был создан вами в главе [Пароли к базам данных MySQL и PostgreSQL](#databasespasswords). Его значение хранится в файле `.env_sql`.
+>
+> - один раз выполняем sql-запрос:
+> ```bash
+> INSTALL COMPONENT 'file://component_classic_hashing';
+> ```
+>
+> Проверить установку компонента можно с помощью sql-запроса:
+> ```bash
+> SELECT * FROM mysql.component;
+> ```
+>
+> Проверить работу клаcсических sql-функций хеширования можно с помощью sql-запроса:
+> ```bash
+> SELECT MD5('test'), SHA1('test');
+> ```
+>
+> - для выхода вводим `exit`.
 
 <a id="phpandcronalternativeversions"></a>
 ### PHP и Cron
@@ -3177,9 +3209,9 @@ docker pull memcached:1.6.45-alpine
 
 Также нам понадобятся:
 - база данных MySQL:
-  - используем стабильный образ `percona/percona-server:8.0.46` / `percona/percona-server:8.4.11`
+  - используем стабильный образ `percona/percona-server:8.0.46` / `percona/percona-server:8.4.11` / `percona/percona-server:9.7.1`
   - добавляем слоем сверху конфигурацию бд
-  - собираем `bitrix24/percona-server:8.0.46-v1-rhel` / `bitrix24/percona-server:8.4.11-v1-rhel`
+  - собираем `bitrix24/percona-server:8.0.46-v1-rhel` / `bitrix24/percona-server:8.4.11-v1-rhel` / `bitrix24/percona-server:9.7.1-v1-rhel`
 - веб-сервер:
   - используем стабильный образ `nginx:1.30.4-alpine-slim`
   - добавляем модули слоем сверху
@@ -3216,6 +3248,7 @@ docker pull memcached:1.6.45-alpine
 ```bash
 docker pull percona/percona-server:8.0.46
 docker pull percona/percona-server:8.4.11
+docker pull percona/percona-server:9.7.1
 docker pull nginx:1.30.4-alpine-slim
 docker pull php:8.2.33-fpm-alpine3.23
 docker pull php:8.3.33-fpm-alpine3.23
@@ -3284,6 +3317,12 @@ docker buildx build --platform linux/arm64,linux/amd64 --provenance=false -f Doc
 ```bash
 cd env-docker/sources/bxpercona8411/
 docker buildx build --platform linux/arm64,linux/amd64 --provenance=false -f Dockerfile -t bitrix24/percona-server:8.4.11-v1-rhel --no-cache .
+```
+
+- `bitrix24/percona-server` для версии `9.7.x`:
+```bash
+cd env-docker/sources/bxpercona971/
+docker buildx build --platform linux/arm64,linux/amd64 --provenance=false -f Dockerfile -t bitrix24/percona-server:9.7.1-v1-rhel --no-cache .
 ```
 
 - `bitrix24/lego`:
