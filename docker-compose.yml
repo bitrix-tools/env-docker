@@ -98,7 +98,7 @@ services:
     restart: unless-stopped
     env_file:
       - .env
-      - .env_sql
+      - .env_postgresql
 #    ports:
 #      - "5432:5432"
     volumes:
@@ -134,7 +134,7 @@ services:
     restart: unless-stopped
     env_file:
       - .env
-      - .env_sql
+      - .env_mysql
 #    ports:
 #      - "3306:3306"
 #      - "33060:33060"

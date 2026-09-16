@@ -170,13 +170,17 @@ docker container run --rm --name mysql_password_generate alpine:3.23 sh -c "(cat
 docker container run --rm --name postgresql_password_generate alpine:3.23 sh -c "(cat /dev/urandom | tr -dc A-Za-z0-9\?\!\@\-\_\+\%\(\)\{\}\[\]\= | head -c 16) | tr -d '\' | tr -d '^' && echo ''"
 ```
 
-Шаблон пароля для суперпользователя `root` базы данных `MySQL` (`CHANGE_MYSQL_ROOT_PASSWORD_HERE`) и шаблон пароля для суперпользователя `postgres` базы данных `PostgreSQL` (`CHANGE_POSTGRESQL_POSTGRES_PASSWORD_HERE`) хранятся в файле `.env_sql` в виде:
+Шаблон пароля для суперпользователя `root` базы данных `MySQL` (`CHANGE_MYSQL_ROOT_PASSWORD_HERE`) хранится в файле `.env_mysql` в виде:
 ```bash
 MYSQL_ROOT_PASSWORD="CHANGE_MYSQL_ROOT_PASSWORD_HERE"
+```
+
+Шаблон пароля для суперпользователя `postgres` базы данных `PostgreSQL` (`CHANGE_POSTGRESQL_POSTGRES_PASSWORD_HERE`) хранится в файле `.env_postgresql` в виде:
+```bash
 POSTGRES_PASSWORD="CHANGE_POSTGRESQL_POSTGRES_PASSWORD_HERE"
 ```
 
-Обязательно измените значения в файле `.env_sql`, заменив шаблоны `CHANGE_MYSQL_ROOT_PASSWORD_HERE` и `CHANGE_POSTGRESQL_POSTGRES_PASSWORD_HERE` на ваши значения.
+Обязательно измените пароли на ваши значения, заменив шаблон `CHANGE_MYSQL_ROOT_PASSWORD_HERE` в файле `.env_mysql` и шаблон `CHANGE_POSTGRESQL_POSTGRES_PASSWORD_HERE` в файле `.env_postgresql`.
 
 <a id="redispassword"></a>
 # Пароль для Redis
@@ -485,12 +489,12 @@ http://10.0.1.119:8588/
 - для `MySQL` версии:
   - Имя хоста (алиас) - `mysql`
   - Имя суперпользователя - `root`
-  - Пароль суперпользователя - был создан вами в главе [Пароли к базам данных MySQL и PostgreSQL](#databasespasswords), хранится в файле `.env_sql`
+  - Пароль суперпользователя - был создан вами в главе [Пароли к базам данных MySQL и PostgreSQL](#databasespasswords), хранится в файле `.env_mysql`
 
 - для `PostgreSQL` версии:
   - Имя хоста (алиас) - `postgres`
   - Имя суперпользователя - `postgres`
-  - Пароль суперпользователя - был создан вами в главе [Пароли к базам данных MySQL и PostgreSQL](#databasespasswords), хранится в файле `.env_sql`
+  - Пароль суперпользователя - был создан вами в главе [Пароли к базам данных MySQL и PostgreSQL](#databasespasswords), хранится в файле `.env_postgresql`
 
 <a id="restorebackup"></a>
 ## Восстановление из резервной копии
@@ -2893,7 +2897,7 @@ docker compose exec --user=root redis sh -c "id"
 docker compose exec mysql bash -c "mysql -u root -p"
 ```
 
-Вводим пароль суперпользователя `root`, который был создан вами в главе [Пароли к базам данных MySQL и PostgreSQL](#databasespasswords). Его значение хранится в файле `.env_sql`.
+Вводим пароль суперпользователя `root`, который был создан вами в главе [Пароли к базам данных MySQL и PostgreSQL](#databasespasswords). Его значение хранится в файле `.env_mysql`.
 
 Выполняем SQL-запросы. Для выхода вводим `exit`.
 
@@ -2905,7 +2909,7 @@ docker compose exec mysql bash -c "mysql -u root -p"
 docker compose exec --user=postgres postgres bash -c "psql"
 ```
 
-Вводим пароль суперпользователя `postgres`, который был создан вами в главе [Пароли к базам данных MySQL и PostgreSQL](#databasespasswords). Его значение хранится в файле `.env_sql`.
+Вводим пароль суперпользователя `postgres`, который был создан вами в главе [Пароли к базам данных MySQL и PostgreSQL](#databasespasswords). Его значение хранится в файле `.env_postgresql`.
 
 Выполняем SQL-запросы. Для выхода вводим `\q`.
 
@@ -3119,7 +3123,7 @@ docker compose up -d
 > ```bash
 > docker compose exec mysql bash -c "mysql -u root -p"
 > ```
-> - вводим пароль суперпользователя `root`, который был создан вами в главе [Пароли к базам данных MySQL и PostgreSQL](#databasespasswords). Его значение хранится в файле `.env_sql`.
+> - вводим пароль суперпользователя `root`, который был создан вами в главе [Пароли к базам данных MySQL и PostgreSQL](#databasespasswords). Его значение хранится в файле `.env_mysql`.
 >
 > - один раз выполняем sql-запрос:
 > ```bash
