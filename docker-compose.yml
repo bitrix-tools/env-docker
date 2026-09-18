@@ -16,6 +16,10 @@ volumes:
     driver: local
   postgres_data:
     driver: local
+  sphinx_lib_data:
+    driver: local
+  sphinx_binlogs_data:
+    driver: local
   www_data:
     driver: local
   bxtemp_data:
@@ -285,7 +289,7 @@ services:
     depends_on:
       - redis
   sphinx:
-    image: quay.io/bitrix24/sphinx:2.2.11-v2-alpine
+    image: quay.io/bitrix24/sphinx:2.2.11-v3-alpine
     container_name: dev_sphinx
 #    ports:
 #      - "9306:9306"
@@ -295,6 +299,8 @@ services:
       - .env
     volumes:
       - ./confs/sphinx/sphinx.conf:/opt/sphinx/conf/sphinx.conf
+      - sphinx_lib_data:/opt/sphinx/lib
+      - sphinx_binlogs_data:/opt/sphinx/binlogs
     init: true
     cgroup: private
     security_opt:

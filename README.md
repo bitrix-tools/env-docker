@@ -3226,7 +3226,7 @@ docker pull memcached:1.6.45-alpine
   - собираем `bitrix24/php:8.2.33-fpm-v1-alpine` / `bitrix24/php:8.3.33-fpm-v1-alpine` / `bitrix24/php:8.4.25-fpm-v1-alpine` / `bitrix24/php:8.5.10-fpm-v1-alpine`
 - поиск:
   - готового образа Sphinx нет, но есть собранный пакет `sphinx` на базе `Alpine Linux` в официальном репозитории ОС
-  - собираем `bitrix24/sphinx:2.2.11-v2-alpine`, установив пакет
+  - собираем `bitrix24/sphinx:2.2.11-v3-alpine`, установив пакет
 - Push-сервер:
   - готового образа нет
   - используем образ NodeJS 22-ой версии
@@ -3271,8 +3271,8 @@ docker pull goacme/lego:v4.35.2
 
 - `bitrix24/sphinx`:
 ```bash
-cd env-docker/sources/bxsphinx2211/v2/
-docker buildx build --platform linux/arm64,linux/amd64 --provenance=false -f Dockerfile -t bitrix24/sphinx:2.2.11-v2-alpine --no-cache .
+cd env-docker/sources/bxsphinx2211/v3/
+docker buildx build --platform linux/arm64,linux/amd64 --provenance=false -f Dockerfile -t bitrix24/sphinx:2.2.11-v3-alpine --no-cache .
 ```
 
 - `bitrix24/push`:
