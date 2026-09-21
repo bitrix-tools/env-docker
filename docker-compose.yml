@@ -51,6 +51,12 @@ services:
       - /tmp:noexec,nodev,nosuid
       - /var/tmp:noexec,nodev,nosuid
       - /dev/shm:noexec,nodev,nosuid
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "256m"
+        max-file: "4"
+        compress: "true"
     networks:
       dev:
         aliases:
@@ -88,6 +94,12 @@ services:
       - /tmp:noexec,nodev,nosuid
       - /var/tmp:noexec,nodev,nosuid
       - /dev/shm:noexec,nodev,nosuid
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "256m"
+        max-file: "4"
+        compress: "true"
     networks:
       dev:
         aliases:
@@ -126,6 +138,12 @@ services:
       - /tmp:noexec,nodev,nosuid
       - /var/tmp:noexec,nodev,nosuid
       - /dev/shm:noexec,nodev,nosuid
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "256m"
+        max-file: "4"
+        compress: "true"
     networks:
       dev:
         aliases:
@@ -157,6 +175,12 @@ services:
       - /tmp:noexec,nodev,nosuid
       - /var/tmp:noexec,nodev,nosuid
       - /dev/shm:noexec,nodev,nosuid
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "256m"
+        max-file: "4"
+        compress: "true"
     networks:
       dev:
         aliases:
@@ -194,6 +218,12 @@ services:
       - /tmp:noexec,nodev,nosuid
       - /var/tmp:noexec,nodev,nosuid
       - /dev/shm:noexec,nodev,nosuid
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "256m"
+        max-file: "4"
+        compress: "true"
     networks:
       dev:
         aliases:
@@ -230,6 +260,12 @@ services:
       - /tmp:noexec,nodev,nosuid
       - /var/tmp:noexec,nodev,nosuid
       - /dev/shm:noexec,nodev,nosuid
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "256m"
+        max-file: "4"
+        compress: "true"
     networks:
       dev:
         aliases:
@@ -255,6 +291,12 @@ services:
       - /tmp:noexec,nodev,nosuid
       - /var/tmp:noexec,nodev,nosuid
       - /dev/shm:noexec,nodev,nosuid
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "256m"
+        max-file: "4"
+        compress: "true"
     networks:
       dev:
         aliases:
@@ -282,6 +324,12 @@ services:
       - /tmp:noexec,nodev,nosuid
       - /var/tmp:noexec,nodev,nosuid
       - /dev/shm:noexec,nodev,nosuid
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "256m"
+        max-file: "4"
+        compress: "true"
     networks:
       dev:
         aliases:
@@ -311,6 +359,12 @@ services:
       - /tmp:noexec,nodev,nosuid
       - /var/tmp:noexec,nodev,nosuid
       - /dev/shm:noexec,nodev,nosuid
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "256m"
+        max-file: "4"
+        compress: "true"
     networks:
       dev:
         aliases:
@@ -352,6 +406,12 @@ services:
       - /tmp:noexec,nodev,nosuid
       - /var/tmp:noexec,nodev,nosuid
       - /dev/shm:noexec,nodev,nosuid
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "256m"
+        max-file: "4"
+        compress: "true"
     networks:
       dev:
         aliases:
@@ -382,6 +442,12 @@ services:
       - /tmp:noexec,nodev,nosuid
       - /var/tmp:noexec,nodev,nosuid
       - /dev/shm:noexec,nodev,nosuid
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "256m"
+        max-file: "4"
+        compress: "true"
     networks:
       dev:
         aliases:
@@ -408,6 +474,12 @@ services:
       - /tmp:noexec,nodev,nosuid
       - /var/tmp:noexec,nodev,nosuid
       - /dev/shm:noexec,nodev,nosuid
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "256m"
+        max-file: "4"
+        compress: "true"
     networks:
       dev:
         aliases:
