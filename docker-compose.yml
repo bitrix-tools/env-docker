@@ -34,7 +34,7 @@ volumes:
     driver: local
 services:
   memcached:
-    image: memcached:1.6.45-alpine
+    image: docker.io/library/memcached:1.6.45-alpine
     container_name: dev_memcached
     restart: unless-stopped
     env_file:
@@ -62,14 +62,14 @@ services:
         aliases:
           - memcached
   redis:
-    #image: redis:7.2.16-alpine
-    #image: redis:7.4.11-alpine
-    #image: redis:8.0.6-alpine
-    image: redis:8.2.10-alpine
-    #image: redis:8.4.7-alpine
-    #image: redis:8.6.7-alpine
-    #image: redis:8.8.3-alpine
-    #image: redis:8.10.2-alpine
+    #image: docker.io/library/redis:7.2.16-alpine
+    #image: docker.io/library/redis:7.4.11-alpine
+    #image: docker.io/library/redis:8.0.6-alpine
+    image: docker.io/library/redis:8.2.10-alpine
+    #image: docker.io/library/redis:8.4.7-alpine
+    #image: docker.io/library/redis:8.6.7-alpine
+    #image: docker.io/library/redis:8.8.3-alpine
+    #image: docker.io/library/redis:8.10.2-alpine
     container_name: dev_redis
     restart: unless-stopped
     command: redis-server /usr/local/etc/redis/redis.conf
@@ -105,11 +105,11 @@ services:
         aliases:
           - redis
   postgres:
-    #image: postgres:14.24-trixie
-    #image: postgres:15.19-trixie
-    image: postgres:16.15-trixie
-    #image: postgres:17.11-trixie
-    #image: postgres:18.6-trixie
+    #image: docker.io/library/postgres:14.24-trixie
+    #image: docker.io/library/postgres:15.19-trixie
+    image: docker.io/library/postgres:16.15-trixie
+    #image: docker.io/library/postgres:17.11-trixie
+    #image: docker.io/library/postgres:18.6-trixie
     container_name: dev_postgres
     restart: unless-stopped
     env_file:

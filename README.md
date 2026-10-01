@@ -157,7 +157,7 @@ docker compose -f docker-compose-test.yml ps
 
 Для этого используем образ `Alpine Linux`:
 ```bash
-docker pull alpine:3.23
+docker pull docker.io/library/alpine:3.23
 ```
 
 Генерируем уникальный пароль для суперпользователя `root` базы данных `MySQL` с помощью команды:
@@ -194,7 +194,7 @@ POSTGRES_PASSWORD="CHANGE_POSTGRESQL_POSTGRES_PASSWORD_HERE"
 
 Для этого используем образ `Alpine Linux`:
 ```bash
-docker pull alpine:3.23
+docker pull docker.io/library/alpine:3.23
 ```
 
 Генерируем уникальный пароль для `Redis` с помощью команды:
@@ -237,7 +237,7 @@ REDIS_PASSWORD="AbCdEfGh@159!753"
 
 Для этого используем образ `Alpine Linux`:
 ```bash
-docker pull alpine:3.23
+docker pull docker.io/library/alpine:3.23
 ```
 
 Генерируем уникальный секретный ключ с помощью команды:
@@ -2964,7 +2964,7 @@ docker compose -f docker-compose.yml -f docker-compose-my.yml ps
 - в раздел `services` добавляем описание сервиса:
 ```bash
   valkey:
-    image: valkey/valkey:7.2.14-alpine
+    image: docker.io/library/valkey/valkey:7.2.14-alpine
     container_name: dev_valkey
     restart: unless-stopped
     command: valkey-server
@@ -3040,14 +3040,14 @@ Lego 4.35.x
 
 До первого запуска проекта редактируем файл `docker-compose.yml`, в разделе `services` находим сервис `redis`. В строку с текущей версией `8.2.x` добавляем `#`, в строке с версией `8.4.x` убираем `#`. Итоговый вид:
 ```bash
-#image: redis:7.2.16-alpine
-#image: redis:7.4.11-alpine
-#image: redis:8.0.6-alpine
-#image: redis:8.2.10-alpine
-image: redis:8.4.7-alpine
-#image: redis:8.6.7-alpine
-#image: redis:8.8.3-alpine
-#image: redis:8.10.2-alpine
+#image: docker.io/library/redis:7.2.16-alpine
+#image: docker.io/library/redis:7.4.11-alpine
+#image: docker.io/library/redis:8.0.6-alpine
+#image: docker.io/library/redis:8.2.10-alpine
+image: docker.io/library/redis:8.4.7-alpine
+#image: docker.io/library/redis:8.6.7-alpine
+#image: docker.io/library/redis:8.8.3-alpine
+#image: docker.io/library/redis:8.10.2-alpine
 ```
 
 Запускаем все контейнеры, оставляем их работать в фоне:
@@ -3068,11 +3068,11 @@ docker compose up -d
 
 До первого запуска проекта редактируем файл `docker-compose.yml`, в разделе `services` находим сервис `postgres`. В строку с текущей версией `16.x` добавляем `#`, в строке с версией `17.x` убираем `#`. Итоговый вид:
 ```bash
-#image: postgres:14.24-trixie
-#image: postgres:15.19-trixie
-#image: postgres:16.15-trixie
-image: postgres:17.11-trixie
-#image: postgres:18.6-trixie
+#image: docker.io/library/postgres:14.24-trixie
+#image: docker.io/library/postgres:15.19-trixie
+#image: docker.io/library/postgres:16.15-trixie
+image: docker.io/library/postgres:17.11-trixie
+#image: docker.io/library/postgres:18.6-trixie
 ```
 
 Запускаем все контейнеры, оставляем их работать в фоне:
@@ -3200,9 +3200,9 @@ docker compose up -d
 
 Можно предварительно скачать ПО из списка выше с помощью команд:
 ```bash
-docker pull postgres:16.15-trixie
-docker pull redis:8.2.10-alpine
-docker pull memcached:1.6.45-alpine
+docker pull docker.io/library/postgres:16.15-trixie
+docker pull docker.io/library/redis:8.2.10-alpine
+docker pull docker.io/library/memcached:1.6.45-alpine
 ```
 
 <a id="bitriximages"></a>
@@ -3250,21 +3250,21 @@ docker pull memcached:1.6.45-alpine
 
 Для сборки нам понадобятся следующие образы (их можно предварительно скачать, используя команды):
 ```bash
-docker pull percona/percona-server:8.0.46
-docker pull percona/percona-server:8.4.11
-docker pull percona/percona-server:9.7.1
-docker pull nginx:1.30.5-alpine-slim
-docker pull php:8.2.34-fpm-alpine3.23
-docker pull php:8.3.35-fpm-alpine3.23
-docker pull php:8.4.26-fpm-alpine3.23
-docker pull php:8.5.11-fpm-alpine3.23
-docker pull node:22
-docker pull node:22-alpine
-docker pull alpine:3.21
-docker pull alpine:3.22
-docker pull alpine:3.23
-docker pull alpine:3.24
-docker pull goacme/lego:v4.35.2
+docker pull docker.io/library/percona/percona-server:8.0.46
+docker pull docker.io/library/percona/percona-server:8.4.11
+docker pull docker.io/library/percona/percona-server:9.7.1
+docker pull docker.io/library/nginx:1.30.5-alpine-slim
+docker pull docker.io/library/php:8.2.34-fpm-alpine3.23
+docker pull docker.io/library/php:8.3.35-fpm-alpine3.23
+docker pull docker.io/library/php:8.4.26-fpm-alpine3.23
+docker pull docker.io/library/php:8.5.11-fpm-alpine3.23
+docker pull docker.io/library/node:22
+docker pull docker.io/library/node:22-alpine
+docker pull docker.io/library/alpine:3.21
+docker pull docker.io/library/alpine:3.22
+docker pull docker.io/library/alpine:3.23
+docker pull docker.io/library/alpine:3.24
+docker pull docker.io/library/goacme/lego:v4.35.2
 ```
 
 Собираем образы, в названии используем `bitrix24`:
@@ -3370,7 +3370,7 @@ docker buildx build --platform linux/arm64,linux/amd64 --provenance=false -f Doc
 
 Образ Nginx можно предварительно скачать, используя команду:
 ```bash
-docker pull nginx:1.30.5-alpine-slim
+docker pull docker.io/library/nginx:1.30.5-alpine-slim
 ```
 
 Для сборки потребуется `Dockerfile` от версии `1.30.5`, найти который можно на [GitHub](https://github.com/nginx/docker-nginx).
