@@ -3101,7 +3101,7 @@ docker compose up -d
 ```bash
 #image: quay.io/bitrix24/percona-server:8.0.46-v1-rhel
 image: quay.io/bitrix24/percona-server:8.4.11-v1-rhel
-#image: quay.io/bitrix24/percona-server:9.7.1-v1-rhel
+#image: quay.io/bitrix24/percona-server:9.7.2-v1-rhel
 ```
 
 Запускаем все контейнеры, оставляем их работать в фоне:
@@ -3213,9 +3213,9 @@ docker pull docker.io/library/memcached:1.6.45-alpine
 
 Также нам понадобятся:
 - база данных MySQL:
-  - используем стабильный образ `percona/percona-server:8.0.46` / `percona/percona-server:8.4.11` / `percona/percona-server:9.7.1`
+  - используем стабильный образ `percona/percona-server:8.0.46` / `percona/percona-server:8.4.11` / `percona/percona-server:9.7.2`
   - добавляем слоем сверху конфигурацию бд
-  - собираем `bitrix24/percona-server:8.0.46-v1-rhel` / `bitrix24/percona-server:8.4.11-v1-rhel` / `bitrix24/percona-server:9.7.1-v1-rhel`
+  - собираем `bitrix24/percona-server:8.0.46-v1-rhel` / `bitrix24/percona-server:8.4.11-v1-rhel` / `bitrix24/percona-server:9.7.2-v1-rhel`
 - веб-сервер:
   - используем стабильный образ `nginx:1.30.5-alpine-slim`
   - добавляем модули слоем сверху
@@ -3252,7 +3252,7 @@ docker pull docker.io/library/memcached:1.6.45-alpine
 ```bash
 docker pull docker.io/library/percona/percona-server:8.0.46
 docker pull docker.io/library/percona/percona-server:8.4.11
-docker pull docker.io/library/percona/percona-server:9.7.1
+docker pull docker.io/library/percona/percona-server:9.7.2
 docker pull docker.io/library/nginx:1.30.5-alpine-slim
 docker pull docker.io/library/php:8.2.34-fpm-alpine3.23
 docker pull docker.io/library/php:8.3.35-fpm-alpine3.23
@@ -3325,8 +3325,8 @@ docker buildx build --platform linux/arm64,linux/amd64 --provenance=false -f Doc
 
 - `bitrix24/percona-server` для версии `9.7.x`:
 ```bash
-cd env-docker/sources/bxpercona971/
-docker buildx build --platform linux/arm64,linux/amd64 --provenance=false -f Dockerfile -t bitrix24/percona-server:9.7.1-v1-rhel --no-cache .
+cd env-docker/sources/bxpercona972/
+docker buildx build --platform linux/arm64,linux/amd64 --provenance=false -f Dockerfile -t bitrix24/percona-server:9.7.2-v1-rhel --no-cache .
 ```
 
 - `bitrix24/lego`:
