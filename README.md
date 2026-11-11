@@ -3040,14 +3040,14 @@ Lego 4.35.x
 
 До первого запуска проекта редактируем файл `docker-compose.yml`, в разделе `services` находим сервис `redis`. В строку с текущей версией `8.2.x` добавляем `#`, в строке с версией `8.4.x` убираем `#`. Итоговый вид:
 ```bash
-#image: docker.io/library/redis:7.2.16-alpine
-#image: docker.io/library/redis:7.4.11-alpine
+#image: docker.io/library/redis:7.2.17-alpine
+#image: docker.io/library/redis:7.4.12-alpine
 #image: docker.io/library/redis:8.0.6-alpine
-#image: docker.io/library/redis:8.2.10-alpine
-image: docker.io/library/redis:8.4.7-alpine
-#image: docker.io/library/redis:8.6.7-alpine
-#image: docker.io/library/redis:8.8.3-alpine
-#image: docker.io/library/redis:8.10.2-alpine
+#image: docker.io/library/redis:8.2.11-alpine
+image: docker.io/library/redis:8.4.8-alpine
+#image: docker.io/library/redis:8.6.8-alpine
+#image: docker.io/library/redis:8.8.4-alpine
+#image: docker.io/library/redis:8.10.3-alpine
 ```
 
 Запускаем все контейнеры, оставляем их работать в фоне:
@@ -3055,7 +3055,7 @@ image: docker.io/library/redis:8.4.7-alpine
 docker compose up -d
 ```
 
-Таким образом Redis будет использовать контейнер с версией `8.4.7`.
+Таким образом Redis будет использовать контейнер с версией `8.4.8`.
 
 Для версий `7.2.x`, `7.4.x`, `8.0.x`, `8.6.x`, `8.8.x`, `8.10.x` настройку выполняем аналогичным образом.
 
@@ -3195,13 +3195,13 @@ docker compose up -d
 
 В этот список попадают (формат `название`:`полный_тег_с_указанием_версии_и_ос`):
 - `postgres:16.15-trixie`
-- `redis:8.2.10-alpine`
+- `redis:8.2.11-alpine`
 - `memcached:1.6.45-alpine`
 
 Можно предварительно скачать ПО из списка выше с помощью команд:
 ```bash
 docker pull docker.io/library/postgres:16.15-trixie
-docker pull docker.io/library/redis:8.2.10-alpine
+docker pull docker.io/library/redis:8.2.11-alpine
 docker pull docker.io/library/memcached:1.6.45-alpine
 ```
 
