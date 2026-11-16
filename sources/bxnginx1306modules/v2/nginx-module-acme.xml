@@ -1,0 +1,251 @@
+<?xml version="1.0" ?>
+<!DOCTYPE change_log SYSTEM "changes.dtd" >
+
+
+<change_log title="nginx_module_acme">
+
+
+<changes apply="nginx-module-acme" ver="0.4.2" rev="1" basever="1.30.6"
+         date="2026-11-09" time="16:00:00 -0800"
+         packager="Nginx Packaging &lt;nginx-packaging@f5.com&gt;">
+<change>
+<para>
+base version updated to 1.30.6-1
+</para>
+</change>
+</changes>
+
+
+<changes apply="nginx-module-acme" ver="0.4.1" rev="1" basever="1.30.5"
+         date="2026-09-15" time="07:07:07 -0700"
+         packager="Nginx Packaging &lt;nginx-packaging@f5.com&gt;">
+<change>
+<para>
+base version updated to 1.30.5-1
+</para>
+</change>
+
+</changes>
+
+
+<changes apply="nginx-module-acme" ver="0.4.1" rev="1" basever="1.30.4"
+         date="2026-07-15" time="10:49:29 -0700"
+         packager="Nginx Packaging &lt;nginx-packaging@f5.com&gt;">
+<change>
+<para>
+base version updated to 1.30.4-1
+</para>
+</change>
+
+</changes>
+
+
+<changes apply="nginx-module-acme" ver="0.4.1" rev="1" basever="1.30.3"
+         date="2026-06-17" time="08:38:18 -0700"
+         packager="Nginx Packaging &lt;nginx-packaging@f5.com&gt;">
+<change>
+<para>
+base version updated to 1.30.3-1
+</para>
+</change>
+
+</changes>
+
+
+<changes apply="nginx-module-acme" ver="0.4.1" rev="1" basever="1.30.2"
+         date="2026-05-22" time="13:56:56 +0100"
+         packager="Nginx Packaging &lt;nginx-packaging@f5.com&gt;">
+<change>
+<para>
+base version updated to 1.30.2-1
+</para>
+</change>
+
+</changes>
+
+
+<changes apply="nginx-module-acme" ver="0.4.1" rev="1" basever="1.30.1"
+         date="2026-05-13" time="16:21:27 +0100"
+         packager="Nginx Packaging &lt;nginx-packaging@f5.com&gt;">
+<change>
+<para>
+base version updated to 1.30.1-1
+</para>
+</change>
+
+</changes>
+
+
+<changes apply="nginx-module-acme" ver="0.4.1" rev="1" basever="1.30.0"
+         date="2026-05-04" time="14:20:00 -0700"
+         packager="Nginx Packaging &lt;nginx-packaging@f5.com&gt;">
+<change>
+<para>
+nginx-acme updated to 0.4.1
+</para>
+</change>
+</changes>
+
+
+<changes apply="nginx-module-acme" ver="0.4.0" rev="1" basever="1.30.0"
+         date="2026-04-21" time="09:10:00 -0700"
+         packager="Nginx Packaging &lt;nginx-packaging@f5.com&gt;">
+<change>
+<para>
+nginx-acme updated to 0.4.0
+</para>
+</change>
+</changes>
+
+
+<changes apply="nginx-module-acme" ver="0.3.1" rev="1" basever="1.30.0"
+         date="2026-04-14" time="14:29:37 +0100"
+         packager="Nginx Packaging &lt;nginx-packaging@f5.com&gt;">
+<change>
+<para>
+base version updated to 1.30.0-1
+</para>
+</change>
+
+</changes>
+
+
+<changes apply="nginx-module-acme" ver="0.3.1" rev="1" basever="1.29.8"
+         date="2026-04-07" time="12:51:54 +0100"
+         packager="Nginx Packaging &lt;nginx-packaging@f5.com&gt;">
+<change>
+<para>
+base version updated to 1.29.8-1
+</para>
+</change>
+
+</changes>
+
+
+<changes apply="nginx-module-acme" ver="0.3.1" rev="1" basever="1.29.7"
+         date="2026-03-24" time="09:38:55 -0700"
+         packager="Nginx Packaging &lt;nginx-packaging@f5.com&gt;">
+<change>
+<para>
+base version updated to 1.29.7-1
+</para>
+</change>
+
+</changes>
+
+
+<changes apply="nginx-module-acme" ver="0.3.1" rev="1" basever="1.29.6"
+         date="2026-03-10" time="08:43:44 -0700"
+         packager="Nginx Packaging &lt;nginx-packaging@f5.com&gt;">
+<change>
+<para>
+base version updated to 1.29.6-1
+</para>
+</change>
+
+</changes>
+
+
+<changes apply="nginx-module-acme" ver="0.3.1" rev="1" basever="1.29.5"
+         date="2026-02-04" time="20:12:39 +0000"
+         packager="Nginx Packaging &lt;nginx-packaging@f5.com&gt;">
+<change>
+<para>
+base version updated to 1.29.5-1
+</para>
+</change>
+
+</changes>
+
+
+<changes apply="nginx-module-acme" ver="0.3.1" rev="1" basever="1.29.4"
+         date="2025-12-09" time="11:05:17 -0800"
+         packager="Nginx Packaging &lt;nginx-packaging@f5.com&gt;">
+<change>
+<para>
+base version updated to 1.29.4-1
+</para>
+</change>
+
+</changes>
+
+
+<changes apply="nginx-module-acme" ver="0.3.1" rev="1" basever="1.29.3"
+         date="2025-12-09" time="09:30:00 -0800"
+         packager="Nginx Packaging &lt;nginx-packaging@f5.com&gt;">
+<change>
+<para>
+nginx-acme updated to 0.3.1
+</para>
+</change>
+</changes>
+
+
+<changes apply="nginx-module-acme" ver="0.3.0" rev="1" basever="1.29.3"
+         date="2025-11-18" time="11:10:00 -0800"
+         packager="Nginx Packaging &lt;nginx-packaging@f5.com&gt;">
+<change>
+<para>
+nginx-acme updated to 0.3.0
+</para>
+</change>
+</changes>
+
+
+<changes apply="nginx-module-acme" ver="0.2.0" rev="1" basever="1.29.3"
+         date="2025-10-28" time="08:48:06 -0700"
+         packager="Nginx Packaging &lt;nginx-packaging@f5.com&gt;">
+<change>
+<para>
+base version updated to 1.29.3-1
+</para>
+</change>
+
+</changes>
+
+<changes apply="nginx-module-acme" ver="0.2.0" rev="2" basever="1.29.2"
+         date="2025-10-10" time="14:00:00 -0700"
+         packager="Nginx Packaging &lt;nginx-packaging@f5.com&gt;">
+<change>
+<para>
+Properly set state_path to point to /var/cache/nginx.
+</para>
+</change>
+</changes>
+
+
+<changes apply="nginx-module-acme" ver="0.2.0" rev="1" basever="1.29.2"
+         date="2025-10-08" time="17:00:00 -0700"
+         packager="Nginx Packaging &lt;nginx-packaging@f5.com&gt;">
+<change>
+<para>
+nginx-acme updated to 0.2.0
+</para>
+</change>
+</changes>
+
+
+<changes apply="nginx-module-acme" ver="0.1.1" rev="1" basever="1.29.2"
+         date="2025-10-07" time="10:14:27 -0700"
+         packager="Nginx Packaging &lt;nginx-packaging@f5.com&gt;">
+<change>
+<para>
+base version updated to 1.29.2-1
+</para>
+</change>
+
+</changes>
+
+
+<changes apply="nginx-module-acme" ver="0.1.1" rev="1" basever="1.29.0"
+         date="2025-08-12" time="13:00:00 -0700"
+         packager="Nginx Packaging &lt;nginx-packaging@f5.com&gt;">
+<change>
+<para>
+Initial release of the nginx-module-acme package.
+</para>
+</change>
+
+</changes>
+
+</change_log>
