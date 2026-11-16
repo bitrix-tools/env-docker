@@ -3219,7 +3219,7 @@ docker pull docker.io/library/memcached:1.6.45-alpine
 - веб-сервер:
   - используем стабильный образ `nginx:1.30.6-alpine-slim`
   - добавляем модули слоем сверху
-  - собираем `bitrix24/nginx:1.30.6-v1-alpine`
+  - собираем `bitrix24/nginx:1.30.6-v2-alpine`
 - интерпретатор PHP-кода:
   - готового совместимого образа PHP нет
   - берем по умолчанию образ `php:8.2.35-fpm-alpine3.23` / `php:8.3.36-fpm-alpine3.23` / `php:8.4.27-fpm-alpine3.23` / `php:8.5.12-fpm-alpine3.23` и добавляем то, что нам надо через пару слоев сверху
@@ -3308,7 +3308,7 @@ docker buildx build --platform linux/arm64,linux/amd64 --provenance=false -f Doc
 - `bitrix24/nginx`:
 ```bash
 cd env-docker/sources/bxnginx1306/
-docker buildx build --platform linux/arm64,linux/amd64 --provenance=false -f Dockerfile -t bitrix24/nginx:1.30.6-v1-alpine --no-cache .
+docker buildx build --platform linux/arm64,linux/amd64 --provenance=false -f Dockerfile -t bitrix24/nginx:1.30.6-v2-alpine --no-cache .
 ```
 
 - `bitrix24/percona-server` для версии `8.0.x`:
@@ -3377,25 +3377,25 @@ docker pull docker.io/library/nginx:1.30.6-alpine-slim
 
 Скачиваем файл для версии 1.30.6 по ссылке: [https://raw.githubusercontent.com/nginx/docker-nginx/4b9f658be76820b24e4ef4605413a5c08707a512/stable/alpine/Dockerfile](https://raw.githubusercontent.com/nginx/docker-nginx/4b9f658be76820b24e4ef4605413a5c08707a512/stable/alpine/Dockerfile)
 
-Модифицируем файл, добавляем нужные модули по списку выше и служебную часть. Пример всех изменений файла для версии 1.30.6 можно найти в папке `/sources/bxnginx1306modules/v1/`.
+Модифицируем файл, добавляем нужные модули по списку выше и служебную часть. Пример всех изменений файла для версии 1.30.6 можно найти в папке `/sources/bxnginx1306modules/v2/`.
 
 Запускаем сборку образа `nginx_modules`, указываем две архитектуры `amd64` и `arm64` в команде:
 
 ```bash
-cd env-docker/sources/bxnginx1306modules/v1/
-docker buildx build --platform linux/arm64,linux/amd64 --provenance=false -f Dockerfile -t bitrix24/nginx_modules:1.30.6-v1-alpine --no-cache .
+cd env-docker/sources/bxnginx1306modules/v2/
+docker buildx build --platform linux/arm64,linux/amd64 --provenance=false -f Dockerfile -t bitrix24/nginx_modules:1.30.6-v2-alpine --no-cache .
 ```
 
 После нужно запустить два контейнера, используя собранный образ выше. По одному для каждой архитектуры: `amd64` и `arm64`.
 
 Для `amd64` выполняем команду:
 ```bash
-docker run --platform=linux/amd64 -d --name=nginxmodules1306testingamd64 -it bitrix24/nginx_modules:1.30.6-v1-alpine
+docker run --platform=linux/amd64 -d --name=nginxmodules1306testingamd64 -it bitrix24/nginx_modules:1.30.6-v2-alpine
 ```
 
 Для `arm64` выполняем команду:
 ```bash
-docker run --platform=linux/arm64 -d --name=nginxmodules1306testingarm64 -it bitrix24/nginx_modules:1.30.6-v1-alpine
+docker run --platform=linux/arm64 -d --name=nginxmodules1306testingarm64 -it bitrix24/nginx_modules:1.30.6-v2-alpine
 ```
 
 Собранные модули Nginx будут доступны в каталоге `/root/packages/` у каждого запущенного контейнера.
