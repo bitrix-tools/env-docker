@@ -5,8 +5,8 @@ USER root
 RUN cd /root/ && \
     apk add --no-cache git curl openssl ca-certificates tzdata && \
     git clone https://github.com/bitrix-tools/nginx-modules.git && \
-    cp /root/nginx-modules/packages/1.30.6/v1/alpine/v3.24/main/$(uname -m)/abuild-key.rsa.pub /etc/apk/keys/ && \
-    echo "/root/nginx-modules/packages/1.30.6/v1/alpine/v3.24/main" >> /etc/apk/repositories && \
+    cp /root/nginx-modules/packages/1.30.6/v2/alpine/v3.24/main/$(uname -m)/abuild-key.rsa.pub /etc/apk/keys/ && \
+    echo "/root/nginx-modules/packages/1.30.6/v2/alpine/v3.24/main" >> /etc/apk/repositories && \
     apk update && \
     apk add nginx-module-xslt nginx-module-geoip nginx-module-image-filter nginx-module-njs nginx-module-acme nginx-module-perl nginx-module-brotli nginx-module-geoip2 nginx-module-ndk nginx-module-lua nginx-module-headers-more nginx-module-zip && \
     apk del git && \
