@@ -3217,9 +3217,9 @@ docker pull docker.io/library/memcached:1.6.45-alpine
   - добавляем слоем сверху конфигурацию бд
   - собираем `bitrix24/percona-server:8.0.46-v1-rhel` / `bitrix24/percona-server:8.4.11-v1-rhel` / `bitrix24/percona-server:9.7.2-v1-rhel`
 - веб-сервер:
-  - используем стабильный образ `nginx:1.30.6-alpine-slim`
+  - используем стабильный образ `nginx:1.30.7-alpine-slim`
   - добавляем модули слоем сверху
-  - собираем `bitrix24/nginx:1.30.6-v2-alpine`
+  - собираем `bitrix24/nginx:1.30.7-v1-alpine`
 - интерпретатор PHP-кода:
   - готового совместимого образа PHP нет
   - берем по умолчанию образ `php:8.2.35-fpm-alpine3.23` / `php:8.3.36-fpm-alpine3.23` / `php:8.4.27-fpm-alpine3.23` / `php:8.5.12-fpm-alpine3.23` и добавляем то, что нам надо через пару слоев сверху
@@ -3253,7 +3253,7 @@ docker pull docker.io/library/memcached:1.6.45-alpine
 docker pull docker.io/library/percona/percona-server:8.0.46
 docker pull docker.io/library/percona/percona-server:8.4.11
 docker pull docker.io/library/percona/percona-server:9.7.2
-docker pull docker.io/library/nginx:1.30.6-alpine-slim
+docker pull docker.io/library/nginx:1.30.7-alpine-slim
 docker pull docker.io/library/php:8.2.35-fpm-alpine3.23
 docker pull docker.io/library/php:8.3.36-fpm-alpine3.23
 docker pull docker.io/library/php:8.4.27-fpm-alpine3.23
@@ -3307,8 +3307,8 @@ docker buildx build --platform linux/arm64,linux/amd64 --provenance=false -f Doc
 
 - `bitrix24/nginx`:
 ```bash
-cd env-docker/sources/bxnginx1306/
-docker buildx build --platform linux/arm64,linux/amd64 --provenance=false -f Dockerfile -t bitrix24/nginx:1.30.6-v2-alpine --no-cache .
+cd env-docker/sources/bxnginx1307/
+docker buildx build --platform linux/arm64,linux/amd64 --provenance=false -f Dockerfile -t bitrix24/nginx:1.30.7-v1-alpine --no-cache .
 ```
 
 - `bitrix24/percona-server` для версии `8.0.x`:
@@ -3365,37 +3365,37 @@ docker buildx build --platform linux/arm64,linux/amd64 --provenance=false -f Doc
 - `xslt`
 - `zip`
 
-Модули собираются на базе стабильного образа `nginx:1.30.6-alpine-slim`, используя официальный образ Nginx с [DockerHub](https://hub.docker.com/):
+Модули собираются на базе стабильного образа `nginx:1.30.7-alpine-slim`, используя официальный образ Nginx с [DockerHub](https://hub.docker.com/):
 - `Nginx`: https://hub.docker.com/_/nginx
 
 Образ Nginx можно предварительно скачать, используя команду:
 ```bash
-docker pull docker.io/library/nginx:1.30.6-alpine-slim
+docker pull docker.io/library/nginx:1.30.7-alpine-slim
 ```
 
-Для сборки потребуется `Dockerfile` от версии `1.30.6`, найти который можно на [GitHub](https://github.com/nginx/docker-nginx).
+Для сборки потребуется `Dockerfile` от версии `1.30.7`, найти который можно на [GitHub](https://github.com/nginx/docker-nginx).
 
-Скачиваем файл для версии 1.30.6 по ссылке: [https://raw.githubusercontent.com/nginx/docker-nginx/4b9f658be76820b24e4ef4605413a5c08707a512/stable/alpine/Dockerfile](https://raw.githubusercontent.com/nginx/docker-nginx/4b9f658be76820b24e4ef4605413a5c08707a512/stable/alpine/Dockerfile)
+Скачиваем файл для версии 1.30.7 по ссылке: [https://raw.githubusercontent.com/nginx/docker-nginx/a2a986d19aac4a79a330e6e0b5171aae4e521926/stable/alpine/Dockerfile](https://raw.githubusercontent.com/nginx/docker-nginx/a2a986d19aac4a79a330e6e0b5171aae4e521926/stable/alpine/Dockerfile)
 
-Модифицируем файл, добавляем нужные модули по списку выше и служебную часть. Пример всех изменений файла для версии 1.30.6 можно найти в папке `/sources/bxnginx1306modules/v2/`.
+Модифицируем файл, добавляем нужные модули по списку выше и служебную часть. Пример всех изменений файла для версии 1.30.7 можно найти в папке `/sources/bxnginx1307modules/v1/`.
 
 Запускаем сборку образа `nginx_modules`, указываем две архитектуры `amd64` и `arm64` в команде:
 
 ```bash
-cd env-docker/sources/bxnginx1306modules/v2/
-docker buildx build --platform linux/arm64,linux/amd64 --provenance=false -f Dockerfile -t bitrix24/nginx_modules:1.30.6-v2-alpine --no-cache .
+cd env-docker/sources/bxnginx1307modules/v1/
+docker buildx build --platform linux/arm64,linux/amd64 --provenance=false -f Dockerfile -t bitrix24/nginx_modules:1.30.7-v1-alpine --no-cache .
 ```
 
 После нужно запустить два контейнера, используя собранный образ выше. По одному для каждой архитектуры: `amd64` и `arm64`.
 
 Для `amd64` выполняем команду:
 ```bash
-docker run --platform=linux/amd64 -d --name=nginxmodules1306testingamd64 -it bitrix24/nginx_modules:1.30.6-v2-alpine
+docker run --platform=linux/amd64 -d --name=nginxmodules1307testingamd64 -it bitrix24/nginx_modules:1.30.7-v1-alpine
 ```
 
 Для `arm64` выполняем команду:
 ```bash
-docker run --platform=linux/arm64 -d --name=nginxmodules1306testingarm64 -it bitrix24/nginx_modules:1.30.6-v2-alpine
+docker run --platform=linux/arm64 -d --name=nginxmodules1307testingarm64 -it bitrix24/nginx_modules:1.30.7-v1-alpine
 ```
 
 Собранные модули Nginx будут доступны в каталоге `/root/packages/` у каждого запущенного контейнера.
@@ -3424,12 +3424,12 @@ exit
 
 Для `amd64` выполняем команду:
 ```bash
-docker container stop nginxmodules1306testingamd64 && docker container rm nginxmodules1306testingamd64
+docker container stop nginxmodules1307testingamd64 && docker container rm nginxmodules1307testingamd64
 ```
 
 Для `arm64` выполняем команду:
 ```bash
-docker container stop nginxmodules1306testingarm64 && docker container rm nginxmodules1306testingarm64
+docker container stop nginxmodules1307testingarm64 && docker container rm nginxmodules1307testingarm64
 ```
 
 Содержимое обоих архивов (`nginxmodules_amd64.zip` и `nginxmodules_arm64.zip`) размещаем в репозитории `bitrix-tools/nginx-modules` на [GitHub](https://github.com/bitrix-tools/nginx-modules).
@@ -3443,7 +3443,7 @@ docker container stop nginxmodules1306testingarm64 && docker container rm nginxm
 
 Собранные модули для Nginx будут использоваться при сборке образа `bitrix24/nginx`.
 
-Механизм сборки для версии `1.30.6` можно найти в файле `/sources/bxnginx1306/Dockerfile`.
+Механизм сборки для версии `1.30.7` можно найти в файле `/sources/bxnginx1307/Dockerfile`.
 
 <a id="fstkos"></a>
 # Особенности операционных систем сертифицированных ФСТЭК
