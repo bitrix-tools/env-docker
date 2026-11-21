@@ -186,10 +186,10 @@ services:
         aliases:
           - mysql
   php:
-    image: quay.io/bitrix24/php:8.2.35-fpm-v1-alpine
-    #image: quay.io/bitrix24/php:8.3.36-fpm-v1-alpine
-    #image: quay.io/bitrix24/php:8.4.27-fpm-v1-alpine
-    #image: quay.io/bitrix24/php:8.5.12-fpm-v1-alpine
+    image: quay.io/bitrix24/php:8.2.36-fpm-v1-alpine
+    #image: quay.io/bitrix24/php:8.3.37-fpm-v1-alpine
+    #image: quay.io/bitrix24/php:8.4.28-fpm-v1-alpine
+    #image: quay.io/bitrix24/php:8.5.13-fpm-v1-alpine
     container_name: dev_php
     restart: unless-stopped
     env_file:
@@ -370,10 +370,10 @@ services:
         aliases:
           - sphinx
   cron:
-    image: quay.io/bitrix24/php:8.2.35-fpm-v1-alpine
-    #image: quay.io/bitrix24/php:8.3.36-fpm-v1-alpine
-    #image: quay.io/bitrix24/php:8.4.27-fpm-v1-alpine
-    #image: quay.io/bitrix24/php:8.5.12-fpm-v1-alpine
+    image: quay.io/bitrix24/php:8.2.36-fpm-v1-alpine
+    #image: quay.io/bitrix24/php:8.3.37-fpm-v1-alpine
+    #image: quay.io/bitrix24/php:8.4.28-fpm-v1-alpine
+    #image: quay.io/bitrix24/php:8.5.13-fpm-v1-alpine
     container_name: dev_cron
     restart: unless-stopped
     command: crond -f -d 8
