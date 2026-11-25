@@ -3034,7 +3034,7 @@ Lego 4.35.x
 <a id="redisalternativeversions"></a>
 ### Redis
 
-Доступные альтернативные версии Redis: `7.2.x`, `7.4.x`, `8.0.x`, `8.4.x`, `8.6.x`, `8.8.x`, `8.10.x`.
+Доступные альтернативные версии Redis: `7.2.x`, `7.4.x`, `8.0.x`, `8.4.x`, `8.6.x`, `8.8.x`, `8.10.x`, `8.12.x`.
 
 Разберем пример использования версии `8.4.x` вместо текущей версии `8.2.x`.
 
@@ -3048,6 +3048,7 @@ image: docker.io/library/redis:8.4.8-alpine
 #image: docker.io/library/redis:8.6.8-alpine
 #image: docker.io/library/redis:8.8.4-alpine
 #image: docker.io/library/redis:8.10.3-alpine
+#image: docker.io/library/redis:8.12.0-alpine
 ```
 
 Запускаем все контейнеры, оставляем их работать в фоне:
@@ -3057,7 +3058,7 @@ docker compose up -d
 
 Таким образом Redis будет использовать контейнер с версией `8.4.8`.
 
-Для версий `7.2.x`, `7.4.x`, `8.0.x`, `8.6.x`, `8.8.x`, `8.10.x` настройку выполняем аналогичным образом.
+Для версий `7.2.x`, `7.4.x`, `8.0.x`, `8.6.x`, `8.8.x`, `8.10.x`, `8.12.x` настройку выполняем аналогичным образом.
 
 <a id="postgresqlalternativeversions"></a>
 ### PostgreSQL
