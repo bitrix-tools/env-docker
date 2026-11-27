@@ -3063,7 +3063,7 @@ docker compose up -d
 <a id="postgresqlalternativeversions"></a>
 ### PostgreSQL
 
-Доступные альтернативные версии PostgreSQL: `14.x`, `15.x`, `17.x`, `18.x`.
+Доступные альтернативные версии PostgreSQL: `14.x`, `15.x`, `17.x`, `18.x`, `19.x`.
 
 Разберем пример использования версии `17.x` вместо текущей версии `16.x`.
 
@@ -3074,6 +3074,7 @@ docker compose up -d
 #image: docker.io/library/postgres:16.16-trixie
 image: docker.io/library/postgres:17.12-trixie
 #image: docker.io/library/postgres:18.7-trixie
+#image: docker.io/library/postgres:19.0-trixie
 ```
 
 Запускаем все контейнеры, оставляем их работать в фоне:
@@ -3083,12 +3084,12 @@ docker compose up -d
 
 Таким образом PostgreSQL будет использовать контейнер с версией `17.12`.
 
-Для версий `14.x`, `15.x`, `18.x` настройку выполняем аналогичные образом.
+Для версий `14.x`, `15.x`, `18.x`, `19.x` настройку выполняем аналогичные образом.
 
 > [!CAUTION]
-> Внимание! В образах PostgreSQL с версии `18.x` изменился путь, используемый для тома с данными этой базы.
+> Внимание! В образах PostgreSQL с версии `18.x` и выше изменился путь, используемый для тома с данными этой базы.
 >
-> При использовании версии `18.x` до первого запуска проекта редактируем файл `docker-compose.yml`, в разделе `services` находим сервис `postgres`.
+> При использовании версий `18.x` и `19.x` до первого запуска проекта редактируем файл `docker-compose.yml`, в разделе `services` находим сервис `postgres`.
 > В списке томов `volumes` находим строку `- postgres_data:/var/lib/postgresql/data` добавляем `#`, в строке ниже `- postgres_data:/var/lib/postgresql` убираем `#`.
 
 <a id="mysqlalternativeversions"></a>

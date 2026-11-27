@@ -111,6 +111,7 @@ services:
     image: docker.io/library/postgres:16.16-trixie
     #image: docker.io/library/postgres:17.12-trixie
     #image: docker.io/library/postgres:18.7-trixie
+    #image: docker.io/library/postgres:19.0-trixie
     container_name: dev_postgres
     restart: unless-stopped
     env_file:
@@ -121,7 +122,7 @@ services:
     volumes:
       # for postgresql 14.x - 17.x
       - postgres_data:/var/lib/postgresql/data
-      # for postgresql 18.x
+      # for postgresql 18.x - 19.x
       #- postgres_data:/var/lib/postgresql
     init: true
     cgroup: private
